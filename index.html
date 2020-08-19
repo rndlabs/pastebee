@@ -5,31 +5,34 @@
 	<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
+<div id="app">
 	<h1>Pastebee</h1>
 	<h4>Powered By Swarm</h4>
 
 	<!-- input -->
 	<div class="add-paste">
 		<h3>Create New Paste</h3>
-		<button>+</button>
+		<button v-on:click="clearPasteText">x</button>
 		<!-- input -->
 		<div>
-			<textarea></textarea>
-			<button>Paste</button>
+			<textarea v-model="pasteText"></textarea>
+			<button v-on:click="createPaste">Paste</button>
 		</div>
 	</div>
 
 	<!-- output -->
-	<div class="add-paste">
-		<h3>Paste 8ca6be62</h3>
+	<div class="show-paste">
+		<h3>Paste {{hash}}</h3>
 		<button>+</button>
 		<!-- output -->
 		<div>
-			<textarea id="bin"></textarea>
+			<textarea id="bin">{{pasteText}}</textarea>
 		</div>
 	</div>
+</div>
 
 </body>
+<script src="./assets/axios.min.js"></script>
 <script src="./assets/vue.js"></script>
 <script src="./assets/index.js"></script>
 </html>
