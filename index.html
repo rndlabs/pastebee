@@ -5,12 +5,28 @@
 	<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<div id="app">
-	<h1>Pastebee.com</h1>
+<div id="app" class="loading">
+	<h1><router-link to="/">Pastebee.com</router-link></h1>
 	<h4>Powered By Swarm</h4>
 
+	<router-link to="/about">About</router-link>
+
+	<router-view>
+		
+	</router-view>
+
+	<!-- output -->
+	<div class="show-paste" v-show="hasPaste">
+		<h3>Paste {{hash}}</h3>
+		<button v-on:click="resetPaste">+</button>
+		<!-- output -->
+		<div>
+			<textarea id="bin">{{pasteText}}</textarea>
+		</div>
+	</div>
+
 	<!-- input -->
-	<div class="add-paste">
+	<div class="add-paste" v-show="!hasPaste">
 		<h3>Create New Paste</h3>
 		<button v-on:click="clearPasteText">x</button>
 		<!-- input -->
@@ -20,18 +36,10 @@
 		</div>
 	</div>
 
-	<!-- output -->
-	<div class="show-paste">
-		<h3>Paste {{hash}}</h3>
-		<button v-on:click="resetPaste">+</button>
-		<!-- output -->
-		<div>
-			<textarea id="bin">{{pasteText}}</textarea>
-		</div>
-	</div>
 </div>
 </body>
 <script src="./assets/axios.min.js"></script>
 <script src="./assets/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="./assets/index.js"></script>
 </html>

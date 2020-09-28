@@ -2,7 +2,13 @@ let gateway = 'http://localhost:8082'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
-let hash, hasPaste, pasteText;
+let loaded,hash, hasPaste, pasteText;
+
+let baseHash;
+let href = window.location.href.split('/');
+if(href.indexOf('bzz') > -1){
+    baseHash = href[4];
+}
 
 let init = async () => {
 
@@ -18,7 +24,20 @@ let init = async () => {
         });
     }
 
+    const About = { template: '<div>Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
+
+    const routes = [
+      { path: '/about', component: About },
+    ]
+
+    const router = new VueRouter({
+      base: '/bzz/' + baseHash,
+      mode: 'history',
+      routes: routes
+    });
+
     let app = new Vue({
+        router: router,
         el: '#app',
         data: {
             hasPaste: hasPaste,
@@ -42,15 +61,20 @@ let init = async () => {
                 });
                 this.hash = response.data.reference;
                 this.hasPaste = true;
-                let h_ = window.location.protocol + '//' + window.location.host + '/?' + this.hash;
+                let h_ = window.location.href + '?' + this.hash;
                 window.history.pushState({path:h_},'',h_);
             },
             resetPaste: function(){
                 this.pasteText = '';
                 this.hasPaste = false;
             }
+        },
+        mounted: ()=>{
+            setTimeout(()=>document.getElementById('app').classList.remove('loading'), 100);
         }
     });
+
+
 
 };
 
