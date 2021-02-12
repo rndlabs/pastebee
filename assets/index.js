@@ -7,7 +7,7 @@ let loaded,hash, hasPaste, pasteText, url;
 let baseHash;
 let href = window.location.href.split('/');
 if(href.indexOf('bzz') > -1){
-    baseHash = href[4];
+     baseHash = href[4];
 }
 
 let init = async () => {
@@ -15,9 +15,11 @@ let init = async () => {
     if(typeof r === 'undefined'){
         hash = '';
         pasteText = '';
+        url = '';
         hasPaste = false;
     }else{
         hash = r;
+        url = window.location.href;
         hasPaste = true;
         await axios.get(gateway + '/files/' + r).then((r_)=>{
             pasteText = r_.data;
@@ -31,7 +33,7 @@ let init = async () => {
     ]
 
     const router = new VueRouter({
-      base: '/bzz/' + baseHash,
+      base: '/',
       mode: 'history',
       routes: routes
     });
@@ -69,6 +71,7 @@ let init = async () => {
             resetPaste: function(){
                 this.pasteText = '';
                 this.hasPaste = false;
+                this.url = '';
             },
             copyUrl: function(){
                 let el = document.getElementById('copy-input-1');
