@@ -2,7 +2,9 @@
 <html>
 <head>
 	<title>Pastebee</title>
-	<link rel="stylesheet" href="assets/app.css">
+	<link rel="stylesheet" href="assets/css/app.css">
+
+  <meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover, user-scalable=0">
 </head>
 <body>
 	<div id="app" class="loading">
@@ -11,13 +13,14 @@
 
 				<router-link to="/">
 					<div id="header">
-						<img alt="New!" id="new" src="assets/images/new.svg">
+						<button v-on:click="resetPaste" id="new"></button>
+						<router-link to="/about">
+							<div id="about"></div>
+						</router-link>
 						<img alt="logo" id="logo" src="assets/images/logo.svg">
-						<img alt="Powered by Swarm" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
+						<img alt="Powered by Swarm" class="desktop-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
 					</div>
 				</router-link>
-
-				<router-link to="/about">About</router-link>
 
 				<router-view>
 					
@@ -25,8 +28,9 @@
 
 				<!-- output -->
 				<div class="show-paste" v-show="hasPaste">
-					<h3>Paste {{hash}}</h3>
-					<button v-on:click="resetPaste">+</button>
+<!-- 					<h3>Paste {{hash}}</h3> -->
+					<input id="copy-input" :value="hash">
+					<button id="copy"></button>
 					<!-- output -->
 					<div>
 						<textarea id="bin">{{pasteText}}</textarea>
@@ -35,15 +39,18 @@
 
 				<!-- input -->
 				<div class="add-paste" v-show="!hasPaste">
-					<h3>Create New Paste</h3>
-					<button v-on:click="clearPasteText">x</button>
 					<!-- input -->
+					<input id="copy-input" :value="hash">
+					<button id="copy"></button>
 					<div>
 						<textarea v-model="pasteText"></textarea>
-						<button v-on:click="createPaste"><img src="assets/images/paste.svg"></button>
+						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .add-paste -->
 			</div> <!-- .container -->
+			<div id="footer">
+				<img alt="Powered by Swarm" class="mobile-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
+			</div>
 		</div> <!-- #wrap -->
 	</div> <!-- #app -->
 </body>

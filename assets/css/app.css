@@ -1,0 +1,208 @@
+@import "reset.css";
+
+body {
+	background-color: #f9b233;
+	background-image: url('../images/zip-v2.svg');
+	background-repeat: no-repeat;
+	background-position: top;
+	background-size: 1920px;
+}
+
+.container {
+	max-width: 1000px;
+	margin: auto;
+}
+
+#header {
+	width: 780px;
+	margin: auto;
+	margin-top: 145px;
+	height: 240px;
+	position: relative;
+	margin-bottom: 50px;
+}
+
+#app {
+	transition: opacity 1s;
+	opacity: 1;
+}
+
+.loading {
+	opacity: 0 !important;
+}
+
+textarea {
+	width: 100%;
+	min-height: 100px;
+	border: 3px solid #000;
+	padding: 5px 10px;
+	margin-top: 10px;
+	margin-bottom: 8px;
+	max-width: 974px;
+}
+
+#logo {
+	max-width: 650px;
+	margin: auto;
+	display: block;
+}
+
+#powered-by-swarm {
+	max-width: 116px;
+	position: absolute;
+	right: 80px;
+	bottom: 0px;
+}
+
+#new, #paste, #copy, #about {
+	border: 3px solid #000;
+	background-color: #fff;
+}
+
+#new {
+	background-image: url(../images/new.svg);
+	position: absolute;
+	width: 96px;
+	height: 57px;
+}
+
+#new:hover {
+	background-image: url(../images/new-hover.svg);
+}
+
+#paste {
+	background-image: url(../images/paste.svg);
+	height: 50px;
+	width: 132px;
+	float: right;
+}
+
+#paste:hover {
+	background-image: url(../images/paste-hover.svg);
+}
+
+#copy {
+	background-image: url(../images/copy.svg);
+	height: 50px;
+	width: 110px;
+}
+
+#copy:hover {
+	background-image: url(../images/copy-hover.svg);
+	height: 50px;
+	width: 110px;
+}
+
+#copy-input {
+	border: 3px solid #000;
+	height: 42px;
+	display: block;
+	float: left;
+	margin-right: 10px;
+	max-width: 860px;
+	width: calc(100vw - (210px - 10px -10px));
+	padding-left: 10px;
+}
+
+#about {
+	background-image: url(../images/about.svg);
+	height: 50px;
+	width: 50px;
+	border-radius: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#about:hover {
+	background-image: url(../images/about-hover.svg);
+}
+
+#about-text {
+	font-family: helvetica;
+	margin-bottom: 20px;
+}
+
+/* Utility */
+
+.desktop-only {
+	visibility: visible;
+}
+
+.mobile-only {
+	visibility: hidden;
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+  body {
+    background-position: center top -7%;
+    background-size: 1000px;
+  }
+
+  .container {
+		max-width: 100%;
+		padding: 20px;
+		margin: auto;
+	}
+
+	#header {
+		width: 100%;
+		margin-top: 0;
+		margin-bottom: 0;
+		height: 180px;
+	}
+
+	#about, #new {
+		position: relative;
+	}
+
+	#new {
+		float: left;
+		width: 61px;
+    height: 40px;
+	}
+
+	#copy {
+		height: 40px;
+		width: 80px;
+	}
+
+	#paste {
+		height: 40px;
+		width: 94px;
+	}
+
+	#about {
+		float: right;
+		height: 34px;
+    width: 34px;
+	}
+
+	#logo {
+		width: 100%;
+	}
+
+	textarea {
+		width: calc(100% - 25px)
+	}
+
+	.desktop-only {
+		visibility: hidden;
+	}
+
+	.mobile-only {
+		visibility: visible;
+	}
+
+	#powered-by-swarm {
+		left: 20px;
+    bottom: 20px;
+	}
+
+	#copy-input {
+		height: 32px;
+		width: calc(100vw - (158px - 10px -10px));
+	}
+}

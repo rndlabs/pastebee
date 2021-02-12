@@ -1,4 +1,4 @@
-let gateway = 'http://localhost:8082'
+let gateway = 'https://bee-gateway.duckdns.org'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
@@ -24,7 +24,7 @@ let init = async () => {
         });
     }
 
-    const About = { template: '<div>Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
+    const About = { template: '<div id="about-text">Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
 
     const routes = [
       { path: '/about', component: About },
