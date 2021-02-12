@@ -93,7 +93,7 @@ textarea {
 	width: 110px;
 }
 
-#copy-input {
+.copy-input {
 	border: 3px solid #000;
 	height: 42px;
 	display: block;

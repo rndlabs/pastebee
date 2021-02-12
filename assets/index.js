@@ -1,8 +1,8 @@
-let gateway = 'https://bee-gateway.duckdns.org'
+let gateway = 'http://localhost:1633'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
-let loaded,hash, hasPaste, pasteText;
+let loaded,hash, hasPaste, pasteText, url;
 
 let baseHash;
 let href = window.location.href.split('/');
@@ -43,6 +43,7 @@ let init = async () => {
             hasPaste: hasPaste,
             pasteText: pasteText,
             hash: hash,
+            url: url,
             gatewayLink: function(){
                 return gateway + '/files/' + this.hash 
             } 
@@ -62,11 +63,17 @@ let init = async () => {
                 this.hash = response.data.reference;
                 this.hasPaste = true;
                 let h_ = window.location.href + '?' + this.hash;
+                this.url = h_;
                 window.history.pushState({path:h_},'',h_);
             },
             resetPaste: function(){
                 this.pasteText = '';
                 this.hasPaste = false;
+            },
+            copyUrl: function(){
+                let el = document.getElementById('copy-input-1');
+                el.select();
+                document.execCommand('copy');
             }
         },
         mounted: ()=>{

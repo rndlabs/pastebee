@@ -29,8 +29,8 @@
 				<!-- output -->
 				<div class="show-paste" v-show="hasPaste">
 <!-- 					<h3>Paste {{hash}}</h3> -->
-					<input id="copy-input" :value="hash">
-					<button id="copy"></button>
+					<input class="copy-input" id="copy-input-1" :value="url">
+					<button id="copy" v-on:click="copyUrl"></button>
 					<!-- output -->
 					<div>
 						<textarea id="bin">{{pasteText}}</textarea>
@@ -40,7 +40,7 @@
 				<!-- input -->
 				<div class="add-paste" v-show="!hasPaste">
 					<!-- input -->
-					<input id="copy-input" :value="hash">
+					<input class="copy-input" id="copy-input-2" :value="hash">
 					<button id="copy"></button>
 					<div>
 						<textarea v-model="pasteText"></textarea>
