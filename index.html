@@ -5,38 +5,47 @@
 	<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
-<div id="app" class="loading">
-	<h1><router-link to="/">Pastebee.com</router-link></h1>
-	<h4>Powered By Swarm</h4>
+	<div id="app" class="loading">
+		<div id="wrap">
+			<div class="container">
 
-	<router-link to="/about">About</router-link>
+				<router-link to="/">
+					<div id="header">
+						<img alt="New!" id="new" src="assets/images/new.svg">
+						<img alt="logo" id="logo" src="assets/images/logo.svg">
+						<img alt="Powered by Swarm" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
+					</div>
+				</router-link>
 
-	<router-view>
-		
-	</router-view>
+				<router-link to="/about">About</router-link>
 
-	<!-- output -->
-	<div class="show-paste" v-show="hasPaste">
-		<h3>Paste {{hash}}</h3>
-		<button v-on:click="resetPaste">+</button>
-		<!-- output -->
-		<div>
-			<textarea id="bin">{{pasteText}}</textarea>
-		</div>
-	</div>
+				<router-view>
+					
+				</router-view>
 
-	<!-- input -->
-	<div class="add-paste" v-show="!hasPaste">
-		<h3>Create New Paste</h3>
-		<button v-on:click="clearPasteText">x</button>
-		<!-- input -->
-		<div>
-			<textarea v-model="pasteText"></textarea>
-			<button v-on:click="createPaste">Paste</button>
-		</div>
-	</div>
+				<!-- output -->
+				<div class="show-paste" v-show="hasPaste">
+					<h3>Paste {{hash}}</h3>
+					<button v-on:click="resetPaste">+</button>
+					<!-- output -->
+					<div>
+						<textarea id="bin">{{pasteText}}</textarea>
+					</div>
+				</div> <!-- .show-paste -->
 
-</div>
+				<!-- input -->
+				<div class="add-paste" v-show="!hasPaste">
+					<h3>Create New Paste</h3>
+					<button v-on:click="clearPasteText">x</button>
+					<!-- input -->
+					<div>
+						<textarea v-model="pasteText"></textarea>
+						<button v-on:click="createPaste"><img src="assets/images/paste.svg"></button>
+					</div>
+				</div> <!-- .add-paste -->
+			</div> <!-- .container -->
+		</div> <!-- #wrap -->
+	</div> <!-- #app -->
 </body>
 <script src="./assets/axios.min.js"></script>
 <script src="./assets/vue.js"></script>
