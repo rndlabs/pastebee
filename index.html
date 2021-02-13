@@ -11,16 +11,17 @@
 		<div id="wrap">
 			<div class="container">
 
-				<router-link to="/">
 					<div id="header">
 						<button v-on:click="resetPaste" id="new"></button>
 						<!-- <router-link to="/about"> -->
 							<div id="about" v-on:click="showAbout"></div>
 						<!-- </router-link> -->
-						<img alt="logo" id="logo" src="assets/images/logo.svg">
-						<img alt="Powered by Swarm" class="desktop-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
+						<router-link to="/">
+							<img alt="logo" id="logo" src="assets/images/logo.eth.svg">
+						</router-link>
+						<a class="desktop-only" id="powered-by-swarm" href="https://swarm.ethereum.org/" target="_blank"></a>
 					</div>
-				</router-link>
+				
 
 				<router-view>
 					
@@ -49,7 +50,7 @@
 
 			</div> <!-- .container -->
 			<div id="footer">
-				<img alt="Powered by Swarm" class="mobile-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
+				<a class="mobile-only" id="powered-by-swarm" href="https://swarm.ethereum.org/" target="_blank"></a>
 			</div>
 
 			<!-- about -->

@@ -54,6 +54,20 @@ textarea {
 	position: absolute;
 	right: 80px;
 	bottom: 0px;
+	background-image:url(../images/powered-by-swarm-v2.svg);
+	width: 116px;
+	height: 116px;
+}
+
+#powered-by-swarm:hover:after {
+	content: "";
+	background-image: url(../images/powered-by-swarm-v2-hover.svg);
+	width: 116px;
+	height: 116px;
+	position: absolute;
+	top: 4px;
+	left: 2px;
+	z-index: -1;
 }
 
 #new, #paste, #copy, #about {
@@ -237,14 +251,29 @@ textarea {
     height: 40px;
 	}
 
+	#new:hover:after {
+		height: 34px;
+		width: 55px;
+	}
+
 	#copy {
 		height: 40px;
 		width: 80px;
 	}
 
+	#copy:hover:after {
+		height: 34px;
+		width: 75px;
+	}
+
 	#paste {
 		height: 40px;
 		width: 94px;
+	}
+
+	#paste:hover:after {
+		height: 34px;
+		width: 89px;
 	}
 
 	#about {
@@ -275,7 +304,7 @@ textarea {
     bottom: 20px;
 	}
 
-	#copy-input {
+	.copy-input {
 		height: 32px;
 		width: calc(100vw - (158px - 10px -10px));
 	}
