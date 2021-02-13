@@ -66,31 +66,19 @@ textarea {
 	height: 57px;
 }
 
-#new:hover {
-	background-image: url(../images/new-hover.svg);
-}
-
 #paste {
 	background-image: url(../images/paste.svg);
 	height: 50px;
 	width: 132px;
 	float: right;
-}
-
-#paste:hover {
-	background-image: url(../images/paste-hover.svg);
+	position: relative;
 }
 
 #copy {
 	background-image: url(../images/copy.svg);
 	height: 50px;
 	width: 110px;
-}
-
-#copy:hover {
-	background-image: url(../images/copy-hover.svg);
-	height: 50px;
-	width: 110px;
+	position: relative;
 }
 
 .copy-input {
@@ -114,8 +102,40 @@ textarea {
 	right: 0;
 }
 
-#about:hover {
-	background-image: url(../images/about-hover.svg);
+#about:hover:after,
+#copy:hover:after,
+#paste:hover:after,
+#new:hover:after {
+	content: " ";
+	position: absolute;
+	top: 2px;
+	left: 1px;
+	border: 2px solid #000;
+	z-index: -1;
+	background-color: #000;
+	width: inherit;
+	height: inherit;
+}
+
+#about:hover:after {
+	top: 2px;
+	left: 1px;
+	border-radius: 50px;
+}
+
+#new:hover:after {
+	width: 90px;
+  height: 51px;
+}
+
+#copy:hover:after {
+	height: 44px;
+	width: 104px;
+}
+
+#paste:hover:after {
+	height: 44px;
+	width: 126px;
 }
 
 #about-text {
