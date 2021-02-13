@@ -40,6 +40,7 @@ textarea {
 	margin-bottom: 8px;
 	max-width: 974px;
 	font-family: monospace;
+	height: calc(100vh - 335px - 335px);
 }
 
 #logo {
@@ -195,7 +196,6 @@ textarea {
   vertical-align: middle;
 }
 
-
 /* Utility */
 
 .desktop-only {
@@ -258,7 +258,8 @@ textarea {
 	}
 
 	textarea {
-		width: calc(100% - 25px)
+		width: calc(100% - 25px);
+		height: calc(100vh - 200px - 156px - 20px);
 	}
 
 	.desktop-only {
