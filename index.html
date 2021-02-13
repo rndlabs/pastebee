@@ -55,13 +55,14 @@
 
 			<!-- about -->
 			<div id="about-page" class="overlay" v-show="showingAbout">
+				<button id="close" v-on:click="hideAbout">X</button>
 				<div class="va-outer">
 					<div class="va-inner">
 						<div class="container">
 							<div id="about-content">
-								Pastebee is powered by Bee - the client to access the Swarm network.
+								<a id="about-1up" href="https://1up.digital" target="_blank"></a>
+								<a id="about-swarm" href="https://swarm.ethereum.org/" target="_blank"></a>
 							</div>
-							<button id="close" v-on:click="hideAbout"></button>
 						</div>
 					</div>
 				</div>
