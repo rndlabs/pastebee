@@ -67,7 +67,7 @@ let init = async () => {
                 });
                 this.hash = response.data.reference;
                 this.hasPaste = true;
-                let h_ = window.location.href + '?' + this.hash;
+                let h_ = window.location.href.split('?')[0] + '?' + this.hash;
                 this.url = h_;
                 window.history.pushState({path:h_},'',h_);
             },

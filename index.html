@@ -33,7 +33,8 @@
 					<button id="copy" v-on:click="copyUrl"></button>
 					<!-- output -->
 					<div>
-						<textarea id="bin">{{pasteText}}</textarea>
+						<textarea id="bin" v-model="pasteText">{{pasteText}}</textarea>
+						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .show-paste -->
 
