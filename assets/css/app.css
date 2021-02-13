@@ -39,6 +39,7 @@ textarea {
 	margin-top: 10px;
 	margin-bottom: 8px;
 	max-width: 974px;
+	font-family: monospace;
 }
 
 #logo {
@@ -90,6 +91,7 @@ textarea {
 	max-width: 860px;
 	width: calc(100vw - (210px - 10px -10px));
 	padding-left: 10px;
+	font-family: monospace;
 }
 
 #about {
