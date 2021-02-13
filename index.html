@@ -14,9 +14,9 @@
 				<router-link to="/">
 					<div id="header">
 						<button v-on:click="resetPaste" id="new"></button>
-						<router-link to="/about">
-							<div id="about"></div>
-						</router-link>
+						<!-- <router-link to="/about"> -->
+							<div id="about" v-on:click="showAbout"></div>
+						<!-- </router-link> -->
 						<img alt="logo" id="logo" src="assets/images/logo.svg">
 						<img alt="Powered by Swarm" class="desktop-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
 					</div>
@@ -45,10 +45,26 @@
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .add-paste -->
+
 			</div> <!-- .container -->
 			<div id="footer">
 				<img alt="Powered by Swarm" class="mobile-only" id="powered-by-swarm" src="assets/images/powered-by-swarm.svg">
 			</div>
+
+			<!-- about -->
+			<div id="about-page" class="overlay" v-show="showingAbout">
+				<div class="va-outer">
+					<div class="va-inner">
+						<div class="container">
+							<div id="about-content">
+								Pastebee is powered by Bee - the client to access the Swarm network.
+							</div>
+							<button id="close" v-on:click="hideAbout"></button>
+						</div>
+					</div>
+				</div>
+			</div> <!-- .add-paste -->
+
 		</div> <!-- #wrap -->
 	</div> <!-- #app -->
 </body>

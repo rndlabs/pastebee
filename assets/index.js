@@ -2,7 +2,7 @@ let gateway = 'http://localhost:1633'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
-let loaded,hash, hasPaste, pasteText, url;
+let loaded,hash, hasPaste, pasteText, url, showingAbout;
 
 let baseHash;
 let href = window.location.href.split('/');
@@ -11,6 +11,8 @@ if(href.indexOf('bzz') > -1){
 }
 
 let init = async () => {
+
+    showAbout = false;
 
     if(typeof r === 'undefined'){
         hash = '';
@@ -26,16 +28,16 @@ let init = async () => {
         });
     }
 
-    const About = { template: '<div id="about-text">Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
+    // const About = { template: '<div id="about-text">Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
 
-    const routes = [
-      { path: '/about', component: About },
-    ]
+    // const routes = [
+    //   { path: '/about', component: About },
+    // ]
 
     const router = new VueRouter({
       base: '/',
       mode: 'history',
-      routes: routes
+      // routes: routes
     });
 
     let app = new Vue({
@@ -44,6 +46,7 @@ let init = async () => {
         data: {
             hasPaste: hasPaste,
             pasteText: pasteText,
+            showingAbout: showingAbout,
             hash: hash,
             url: url,
             gatewayLink: function(){
@@ -77,6 +80,12 @@ let init = async () => {
                 let el = document.getElementById('copy-input-1');
                 el.select();
                 document.execCommand('copy');
+            },
+            showAbout: function(){
+                this.showingAbout = true;
+            },
+            hideAbout: function(){
+                this.showingAbout = false;
             }
         },
         mounted: ()=>{
