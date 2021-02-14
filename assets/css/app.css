@@ -138,6 +138,14 @@ textarea {
   right: 20px;
 }
 
+#about,
+#copy,
+#paste,
+#new,
+#close {
+	cursor: pointer;
+}
+
 #about:hover:after,
 #copy:hover:after,
 #paste:hover:after,
