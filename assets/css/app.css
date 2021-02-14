@@ -258,7 +258,7 @@ textarea {
 
 @media (max-width: 900px) {
   body {
-    background-position: center top -7%;
+    background-position: center top 7vw;
     background-size: 1000px;
   }
 
@@ -270,9 +270,10 @@ textarea {
 
 	#header {
 		width: 100%;
-		margin-top: 0;
-		margin-bottom: 0;
-		height: 180px;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: 180px;
+    height: auto;
 	}
 
 	#about, #new {
@@ -342,4 +343,11 @@ textarea {
 		height: 32px;
 		width: calc(100vw - (158px - 10px -10px));
 	}
+}
+
+@media (max-width: 700px) {
+  body {
+    background-position: center top -5vw;
+    background-size: 1000px;
+  }
 }
