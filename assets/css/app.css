@@ -25,6 +25,11 @@ body {
 	margin-bottom: 50px;
 }
 
+#wrap {
+	padding-bottom: 120px;
+	overflow: auto;
+}
+
 #app {
 	transition: opacity 1s;
 	opacity: 1;
@@ -42,7 +47,7 @@ textarea {
 	margin-bottom: 8px;
 	max-width: 954px;
 	font-family: monospace;
-	height: calc(100vh - 335px - 335px);
+	height: 1000px;
 	font-weight: bold;
 	line-height: 17px;
 	font-size: 15px;
@@ -200,7 +205,7 @@ textarea {
 
 #about-page {
 	background-color: #f8b133;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
