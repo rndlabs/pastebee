@@ -41,9 +41,13 @@ textarea {
 	padding: 5px 10px;
 	margin-top: 10px;
 	margin-bottom: 8px;
-	max-width: 974px;
+	max-width: 954px;
 	font-family: monospace;
 	height: calc(100vh - 335px - 335px);
+	font-weight: bold;
+	line-height: 17px;
+	font-size: 15px;
+	padding: 10px 20px;
 }
 
 #logo {
@@ -106,9 +110,9 @@ textarea {
 	display: block;
 	float: left;
 	margin-right: 10px;
-	max-width: 860px;
+	max-width: 850px;
 	width: calc(100vw - (210px - 10px -10px));
-	padding-left: 10px;
+	padding-left: 20px;
 	font-family: monospace;
 }
 
@@ -323,7 +327,9 @@ textarea {
 
 	textarea {
 		width: calc(100% - 25px);
-		height: calc(100vh - 200px - 156px - 20px);
+		height: calc(100vh - 200px - 156px - 70px);
+		padding: 10px;
+		padding-top: 10px;
 	}
 
 	.desktop-only {
@@ -341,7 +347,8 @@ textarea {
 
 	.copy-input {
 		height: 32px;
-		width: calc(100vw - (158px - 10px -10px));
+		padding-left: 10px;
+    width: calc(100vw - (158px - 10px));
 	}
 }
 
