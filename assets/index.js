@@ -85,7 +85,16 @@ let init = async () => {
                 this.showingAbout = true;
             },
             hideAbout: function(){
-                this.showingAbout = false;
+                let contentEl = document.getElementById('about-content');
+                let pageEl = document.getElementById('about-page');
+                contentEl.classList.add('rotate-out-center');
+                pageEl.classList.add('fade-out');
+                setTimeout(()=>{
+                    this.showingAbout = false;
+                    contentEl.classList.remove('rotate-out-center');
+                    pageEl.classList.remove('fade-out');
+                }, 1000);
+                
             }
         },
         mounted: ()=>{

@@ -16,14 +16,14 @@
             transform: translateY(-500px);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
-    opacity: 0;
+    /*opacity: 0;*/
   }
   38% {
     -webkit-transform: translateY(0);
             transform: translateY(0);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
-    opacity: 1;
+    /*opacity: 1;*/
   }
   55% {
     -webkit-transform: translateY(-65px);
@@ -68,14 +68,14 @@
             transform: translateY(-500px);
     -webkit-animation-timing-function: ease-in;
             animation-timing-function: ease-in;
-    opacity: 0;
+    /*opacity: 0;*/
   }
   38% {
     -webkit-transform: translateY(0);
             transform: translateY(0);
     -webkit-animation-timing-function: ease-out;
             animation-timing-function: ease-out;
-    opacity: 1;
+    /*opacity: 1;*/
   }
   55% {
     -webkit-transform: translateY(-65px);
