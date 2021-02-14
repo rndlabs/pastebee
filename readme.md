@@ -1,3 +1,12 @@
+![Pastebee](https://raw.githubusercontent.com/1up-digital/pastebee/master/assets/images/about-details.svg)
+
+Roadmap
+
+- code highlighting
+- feeds
+- collaborative editing?
+- and more...
+
 For development
 
 ```npm i -g live-server```
