@@ -1,4 +1,4 @@
-let gateway = 'http://gateway.ethswarm.org'
+let gateway = 'https://gateway.ethswarm.org'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
