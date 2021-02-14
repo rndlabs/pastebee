@@ -3,36 +3,40 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 181.3 182" style="enable-background:new 0 0 181.3 182;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#F8B133;}
-	.st1{fill:#FFFFFF;}
-	.st2{fill:#1D1D1B;}
-	.st3{font-family:'HouseSlant-Regular';}
-	.st4{font-size:12.9166px;}
-	.st5{font-size:11.6814px;}
-	.st6{font-size:7.5587px;}
-	.st7{font-size:19.3902px;}
-	.st8{font-size:8.8038px;}
-	.st9{font-size:27.4776px;}
-	.st10{fill:#F8B133;stroke:#000000;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;}
+	.st1{font-family:'HouseSlant-Regular';}
+	.st2{font-size:12.9166px;}
+	.st3{font-size:11.6814px;}
+	.st4{font-size:7.5587px;}
+	.st5{font-size:19.3902px;}
+	.st6{font-size:8.8038px;}
+	.st7{fill:#1D1D1B;}
+	.st8{font-size:27.4776px;}
+	.st9{fill:#F8B133;}
+	.st10{fill:none;stroke:#000000;stroke-miterlimit:10;}
 </style>
 <g>
-	<polygon class="st1" points="145.4,19.9 149.2,38.6 167.5,44.2 164.2,63 179.3,74.8 169.4,91.2 179.2,107.7 164.1,119.4 
+	<polygon class="st0" points="145.4,19.9 149.2,38.6 167.5,44.2 164.2,63 179.3,74.8 169.4,91.2 179.2,107.7 164.1,119.4 
 		167.3,138.3 148.9,143.7 145.1,162.5 126,161 115.7,177.1 98.4,168.7 82.9,180 69.9,166 51.4,170.9 44.3,153.2 25.2,151.1 
 		25,131.9 8,123.1 14.7,105.2 2,90.8 14.8,76.5 8.2,58.6 25.2,49.8 25.5,30.7 44.6,28.7 51.8,11 70.3,16 83.4,2 98.8,13.4 
 		116.1,5.2 126.4,21.3 	"/>
-	<path class="st2" d="M82.8,182l-13.4-14.3l-18.9,5l-7.3-18.2l-19.5-2.1l-0.2-19.6l-17.4-9l6.8-18.3L0,90.8l13-14.6L6.3,57.8
-		l17.4-8.9L24,29.3l19.5-2l7.4-18.1l18.9,5.1L83.2,0L99,11.6l17.7-8.4l10.5,16.5l19.5-1.5l3.8,19.2l18.7,5.7l-3.4,19.3l15.4,12.1
-		l-10.1,16.8l10,16.8l-15.5,12l3.3,19.3l-18.8,5.6l-3.9,19.2l-19.5-1.6L116.2,179l-17.6-8.5L82.8,182z M70.4,164.3L83.1,178l15.1-11
-		l16.8,8.1l10.1-15.7l18.6,1.5l3.8-18.3l17.9-5.3l-3.1-18.4l14.8-11.5l-9.6-16.1l9.7-16l-14.7-11.5l3.2-18.4l-17.9-5.4l-3.7-18.3
-		l-18.6,1.4l-10-15.8l-16.9,8L83.6,4.1L70.7,17.7l-18.1-4.9l-7.1,17.3l-18.6,2l-0.3,18.7l-16.6,8.5l6.5,17.6l-12.4,14l12.4,14
-		l-6.5,17.5l16.6,8.6l0.2,18.7l18.6,2l7,17.4L70.4,164.3z"/>
+	<path d="M82.8,182l-13.4-14.3l-18.9,5l-7.3-18.2l-19.5-2.1l-0.2-19.6l-17.4-9l6.8-18.3L0,90.8l13-14.6L6.3,57.8l17.4-8.9L24,29.3
+		l19.5-2l7.4-18.1l18.9,5.1L83.2,0L99,11.6l17.7-8.4l10.5,16.5l19.5-1.5l3.8,19.2l18.7,5.7l-3.4,19.3l15.4,12.1l-10.1,16.8l10,16.8
+		l-15.5,12l3.3,19.3l-18.8,5.6l-3.9,19.2l-19.5-1.6L116.2,179l-17.6-8.5L82.8,182z M70.4,164.3L83.1,178l15.1-11l16.8,8.1l10.1-15.7
+		l18.6,1.5l3.8-18.3l17.9-5.3l-3.1-18.4l14.8-11.5l-9.6-16.1l9.7-16l-14.7-11.5l3.2-18.4L147.8,40l-3.7-18.3l-18.6,1.4l-10-15.8
+		l-16.9,8l-15-11.2L70.7,17.7l-18.1-4.9l-7.1,17.3l-18.6,2l-0.3,18.7L10,59.3l6.5,17.6l-12.4,14l12.4,14L10,122.4l16.6,8.6l0.2,18.7
+		l18.6,2l7,17.4L70.4,164.3z"/>
 </g>
-<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 62.5976 133.6185)" class="st2 st3 st4">powered by</text>
-<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 60.1204 67.0068)" class="st2 st3 st5">bringing you...</text>
-<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 73.2519 29.116)" class="st2 st3 st6">the all new!</text>
-<text transform="matrix(1 0 0 1 65.9971 160.1905)" class="st2 st3 st7">Swarm</text>
-<text transform="matrix(1 0 0 1 67.4062 143.4015)" class="st2 st3 st8">- the mighty -</text>
-<text transform="matrix(1 0 0 1 24.7131 92.1935)"><tspan x="0" y="0" class="st2 st3 st9">unstoppable</tspan><tspan x="9.9" y="25" class="st2 st3 st9">publishing </tspan></text>
-<text transform="matrix(1 0 0 1 44.9719 50.6935)" class="st2 st3 st9">PASTEBEE</text>
-<text transform="matrix(1 0 0 1 23.2134 89.6935)"><tspan x="0" y="0" class="st10 st3 st9">unstoppable</tspan><tspan x="9.9" y="25" class="st10 st3 st9">publishing </tspan></text>
+<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 62.5976 133.6185)" class="st1 st2">powered by</text>
+<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 60.1204 67.0068)" class="st1 st3">bringing you...</text>
+<text transform="matrix(0.9961 -8.795000e-02 8.795000e-02 0.9961 73.2519 29.116)" class="st1 st4">the all new!</text>
+<text transform="matrix(1 0 0 1 65.9971 160.1905)" class="st1 st5">Swarm</text>
+<text transform="matrix(1 0 0 1 67.4062 143.4015)" class="st1 st6">- the mighty -</text>
+<text transform="matrix(1 0 0 1 24.7131 92.1935)" class="st7 st1 st8">unstoppable</text>
+<text transform="matrix(1 0 0 1 34.6131 117.1935)" class="st7 st1 st8">publishing </text>
+<text transform="matrix(1 0 0 1 44.9719 50.6935)" class="st1 st8">PASTEBEE</text>
+<text transform="matrix(1 0 0 1 23.2134 89.6935)" class="st9 st1 st8">unstoppable</text>
+<text transform="matrix(1 0 0 1 23.2134 89.6935)" class="st10 st1 st8">unstoppable</text>
+<text transform="matrix(1 0 0 1 33.1134 114.6935)" class="st9 st1 st8">publishing </text>
+<text transform="matrix(1 0 0 1 33.1134 114.6935)" class="st10 st1 st8">publishing </text>
 </svg>
