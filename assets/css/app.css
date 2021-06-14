@@ -125,6 +125,7 @@ textarea,
 	width: calc(100vw - (210px - 10px -10px));
 	padding-left: 20px;
 	font-family: monospace;
+	-webkit-appearance: textfield;
 }
 
 #about {
@@ -147,6 +148,7 @@ textarea,
   position: absolute;
   top: 20px;
   right: 20px;
+  background-color: #fff;
 }
 
 #about,
@@ -388,7 +390,14 @@ textarea,
 
   textarea, 
 	#texteditor {
-		min-height: calc(100vh - 200px - 156px - 70px);
+		min-height: calc(100vh - 200px - 156px - 70px - 75px);
+	}
+
+	.copy-input {
+		height: 32px;
+		padding-left: 10px;
+		padding-right: 0;
+		padding-bottom: 0;
 	}
 }
 
