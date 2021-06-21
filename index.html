@@ -44,7 +44,8 @@
 					<button id="copy" v-on:click="copyUrl"></button>
 					<!-- output -->
 					<div>
-						<textarea id="bin" v-model="pasteText">{{pasteText}}</textarea>
+						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput">{{pasteText}}</div>
+						<!-- <textarea id="bin" v-model="pasteText">{{pasteText}}</textarea> -->
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .show-paste -->
@@ -53,7 +54,7 @@
 				<div class="add-paste" v-show="!hasPaste">
 					<!-- input -->
 					<div>
-						<div contentEditable="true" id="texteditor" placeholder="Paste text here..."></div>
+						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput"></div>
 						<!-- <textarea v-model="pasteText" placeholder="Paste text here..."></textarea> -->
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>

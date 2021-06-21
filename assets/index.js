@@ -95,6 +95,9 @@ let init = async () => {
                     pageEl.classList.remove('fade-out');
                 }, 1000);
                 
+            },
+            onInput: function(e){
+                this.pasteText = e.target.innerText;
             }
         },
         mounted: ()=>{
