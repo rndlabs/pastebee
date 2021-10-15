@@ -44,7 +44,7 @@
 					<button id="copy" v-on:click="copyUrl"></button>
 					<!-- output -->
 					<div>
-						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput">{{pasteText}}</div>
+						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput"></div>
 						<!-- <textarea id="bin" v-model="pasteText">{{pasteText}}</textarea> -->
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>

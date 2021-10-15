@@ -54,6 +54,7 @@ textarea,
 	font-size: 15px;
 	padding: 15px 20px;
 	box-sizing: border-box;
+	white-space: pre-wrap;
 }
 
 #texteditor[placeholder]:empty:before {
@@ -390,7 +391,8 @@ textarea,
 
   textarea, 
 	#texteditor {
-		min-height: calc(100vh - 200px - 156px - 70px - 75px);
+		/*min-height: calc(100vh - 200px - 156px - 70px - 75px - 50px);*/
+		min-height: calc(100vh - 200px - 156px - 80px);
 	}
 
 	.copy-input {

@@ -1,4 +1,4 @@
-let gateway = 'https://gateway.ethswarm.org'
+let gateway = 'http://192.168.0.24:1633'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
@@ -25,6 +25,7 @@ let init = async () => {
         hasPaste = true;
         await axios.get(gateway + '/files/' + r).then((r_)=>{
             pasteText = r_.data;
+            document.getElementById('texteditor').textContent = pasteText
         });
     }
 
@@ -67,6 +68,7 @@ let init = async () => {
                 });
                 this.hash = response.data.reference;
                 this.hasPaste = true;
+                document.getElementById('texteditor').textContent = this.pasteText
                 let h_ = window.location.href.split('?')[0] + '?' + this.hash;
                 this.url = h_;
                 window.history.pushState({path:h_},'',h_);
@@ -98,6 +100,8 @@ let init = async () => {
             },
             onInput: function(e){
                 this.pasteText = e.target.innerText;
+
+                console.log(this.pasteText)
             }
         },
         mounted: ()=>{
