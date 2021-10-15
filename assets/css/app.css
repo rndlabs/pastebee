@@ -132,7 +132,6 @@ textarea {
 }
 
 #close {
-  background-image: url(../images/close-v2.svg);
   height: 50px;
   width: 50px;
   border-radius: 50px;
@@ -343,6 +342,9 @@ textarea {
 		height: calc(100vh - 200px - 156px - 70px);
 		padding: 10px;
 		padding-top: 10px;
+	  white-space: pre;
+	  overflow-wrap: normal;
+	  overflow-x: scroll;
 	}
 
 	.desktop-only {

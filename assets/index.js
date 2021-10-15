@@ -1,4 +1,4 @@
-let gateway = 'https://gateway.ethswarm.org'
+let gateway = 'https://bee-0.gateway.ethswarm.org'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
@@ -23,17 +23,11 @@ let init = async () => {
         hash = r;
         url = window.location.href;
         hasPaste = true;
-        await axios.get(gateway + '/files/' + r).then((r_)=>{
+        await axios.get(gateway + '/bzz/' + r).then((r_)=>{
             pasteText = r_.data;
         });
     }
-
-    // const About = { template: '<div id="about-text">Pastebee is powered by Bee - the client to access the Swarm network.</div>' }
-
-    // const routes = [
-    //   { path: '/about', component: About },
-    // ]
-
+    
     const router = new VueRouter({
       base: '/',
       mode: 'history',
@@ -50,7 +44,7 @@ let init = async () => {
             hash: hash,
             url: url,
             gatewayLink: function(){
-                return gateway + '/files/' + this.hash 
+                return gateway + '/bzz/' + this.hash 
             } 
         },
         methods: {
@@ -59,12 +53,8 @@ let init = async () => {
             },
             createPaste: async function(){
                 let formData = new FormData();
-                formData.append('pastebee.com.txt', this.pasteText);
-                let response = await axios.post(gateway + '/files', formData, {
-                    headers: {
-                      'Content-Type': 'text/plain'
-                    }
-                });
+                // formData.append('pastebee.com.txt', this.pasteText);
+                let response = await axios.post(gateway + '/bzz?name=pastebee.com.txt', this.pasteText)
                 this.hash = response.data.reference;
                 this.hasPaste = true;
                 let h_ = window.location.href.split('?')[0] + '?' + this.hash;
