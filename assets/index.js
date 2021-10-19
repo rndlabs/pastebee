@@ -25,6 +25,7 @@ let init = async () => {
         hasPaste = true;
         await axios.get(gateway + '/bzz/' + r).then((r_)=>{
             pasteText = r_.data;
+            document.getElementById('texteditor').textContent = pasteText
         });
     }
     
@@ -57,6 +58,7 @@ let init = async () => {
                 let response = await axios.post(gateway + '/bzz?name=pastebee.com.txt', this.pasteText)
                 this.hash = response.data.reference;
                 this.hasPaste = true;
+                document.getElementById('texteditor').textContent = this.pasteText
                 let h_ = window.location.href.split('?')[0] + '?' + this.hash;
                 this.url = h_;
                 window.history.pushState({path:h_},'',h_);
@@ -85,6 +87,11 @@ let init = async () => {
                     pageEl.classList.remove('fade-out');
                 }, 1000);
                 
+            },
+            onInput: function(e){
+                this.pasteText = e.target.innerText;
+
+                console.log(this.pasteText)
             }
         },
         mounted: ()=>{

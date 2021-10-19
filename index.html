@@ -7,6 +7,14 @@
 	<link rel="stylesheet" href="assets/css/app.css">
 
   <meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover, user-scalable=0">
+
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
 </head>
 <body>
 	<div id="app" class="loading">
@@ -19,9 +27,9 @@
 							<div id="about" v-on:click="showAbout"></div>
 						<!-- </router-link> -->
 						<router-link to="/">
-							<img alt="logo" id="logo" src="assets/images/logo.eth.svg">
+							<img alt="logo" id="logo" src="assets/images/logo.svg">
 						</router-link>
-						<a class="desktop-only" id="powered-by-swarm" href="https://ethswarm.org/" target="_blank"></a>
+						<a class="desktop-only" id="powered-by-swarm" href="https://www.ethswarm.org/" target="_blank"></a>
 					</div>
 				
 
@@ -36,7 +44,8 @@
 					<button id="copy" v-on:click="copyUrl"></button>
 					<!-- output -->
 					<div>
-						<textarea id="bin" v-model="pasteText">{{pasteText}}</textarea>
+						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput"></div>
+						<!-- <textarea id="bin" v-model="pasteText">{{pasteText}}</textarea> -->
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .show-paste -->
@@ -45,14 +54,15 @@
 				<div class="add-paste" v-show="!hasPaste">
 					<!-- input -->
 					<div>
-						<textarea v-model="pasteText" placeholder="Paste text here..."></textarea>
+						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput"></div>
+						<!-- <textarea v-model="pasteText" placeholder="Paste text here..."></textarea> -->
 						<button id="paste" v-on:click="createPaste"></button>
 					</div>
 				</div> <!-- .add-paste -->
 
 			</div> <!-- .container -->
 			<div id="footer">
-				<a class="mobile-only" id="powered-by-swarm" href="https://ethswarm.org/" target="_blank"></a>
+				<a class="mobile-only" id="powered-by-swarm" href="https://www.ethswarm.org/" target="_blank"></a>
 			</div>
 
 			<!-- about -->
@@ -63,7 +73,7 @@
 						<div class="container">
 							<div id="about-content">
 								<a id="about-1up" href="https://1up.digital" target="_blank"></a>
-								<a id="about-swarm" href="https://ethswarm.org/" target="_blank"></a>
+								<a id="about-swarm" href="https://www.ethswarm.org/" target="_blank"></a>g
 							</div>
 						</div>
 					</div>
