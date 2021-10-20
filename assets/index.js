@@ -1,4 +1,4 @@
-const GATEWAY = 'https://bee-0.gateway.ethswarm.org'
+const GATEWAY = 'https://bee-9.gateway.ethswarm.org'
 const META_FILE_NAME = '.swarmgatewaymeta.json'
 
 let h = window.location.href;
