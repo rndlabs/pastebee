@@ -1,4 +1,4 @@
-let gateway = 'https://bee-0.gateway.ethswarm.org'
+let gateway = 'https://bee-9.gateway.ethswarm.org'
 let h = window.location.href;
 let r = h.split(h.match(/\?/),h.length)[1];
 
@@ -28,7 +28,7 @@ let init = async () => {
             document.getElementById('texteditor').textContent = pasteText
         });
     }
-    
+
     const router = new VueRouter({
       base: '/',
       mode: 'history',
@@ -45,8 +45,8 @@ let init = async () => {
             hash: hash,
             url: url,
             gatewayLink: function(){
-                return gateway + '/bzz/' + this.hash 
-            } 
+                return gateway + '/bzz/' + this.hash
+            }
         },
         methods: {
             clearPasteText: function(){
@@ -86,7 +86,7 @@ let init = async () => {
                     contentEl.classList.remove('rotate-out-center');
                     pageEl.classList.remove('fade-out');
                 }, 1000);
-                
+
             },
             onInput: function(e){
                 this.pasteText = e.target.innerText;
