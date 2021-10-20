@@ -1,8 +1,10 @@
-let gateway = 'https://bee-9.gateway.ethswarm.org'
-let h = window.location.href;
-let r = h.split(h.match(/\?/),h.length)[1];
+const GATEWAY = 'https://bee-9.gateway.ethswarm.org'
+const META_FILE_NAME = '.swarmgatewaymeta.json'
 
-let loaded,hash, hasPaste, pasteText, url, showingAbout;
+let h = window.location.href;
+let parsedHash = h.split(h.match(/\?/),h.length)[1];
+
+let hash, hasPaste, metadata, pasteText, url, showingAbout;
 
 let baseHash;
 let href = window.location.href.split('/');
@@ -10,22 +12,40 @@ if(href.indexOf('bzz') > -1){
      baseHash = href[4];
 }
 
+const shortenBytes = (value) => {
+    if (value < 1e3) return `${value} bytes`
+
+    if (value < 1e6) return `${(value / 1e3).toFixed(2)} kB`
+
+    return `${(value / 1e6).toFixed(2)} MB`
+}
+
 let init = async () => {
 
     showAbout = false;
 
-    if(typeof r === 'undefined'){
+    if(typeof parsedHash === 'undefined'){
         hash = '';
         pasteText = '';
         url = '';
         hasPaste = false;
     }else{
-        hash = r;
+        hash = parsedHash;
         url = window.location.href;
         hasPaste = true;
-        await axios.get(gateway + '/bzz/' + r).then((r_)=>{
+        await axios.get(GATEWAY + '/bzz/' + parsedHash).then((r_)=>{
             pasteText = r_.data;
             document.getElementById('texteditor').textContent = pasteText
+        });
+
+        // Fetch metadata file
+        await axios.get(GATEWAY + '/bzz/' + parsedHash + '/' + META_FILE_NAME).then((r_)=>{
+            metadata = r_.data;
+        }).catch(e => {
+            // If not found, than we ignore, otherwise at least propagate to console
+            if ( !e.response || e.response.status !== 404) {
+                console.error(e)
+            }
         });
     }
 
@@ -35,17 +55,20 @@ let init = async () => {
       // routes: routes
     });
 
+    Vue.filter('shortenBytes', shortenBytes)
+
     let app = new Vue({
         router: router,
         el: '#app',
         data: {
+            metadata: metadata,
             hasPaste: hasPaste,
             pasteText: pasteText,
             showingAbout: showingAbout,
             hash: hash,
             url: url,
             gatewayLink: function(){
-                return gateway + '/bzz/' + this.hash
+                return GATEWAY + '/bzz/' + this.hash
             }
         },
         methods: {
@@ -55,13 +78,14 @@ let init = async () => {
             createPaste: async function(){
                 let formData = new FormData();
                 // formData.append('pastebee.com.txt', this.pasteText);
-                let response = await axios.post(gateway + '/bzz?name=pastebee.com.txt', this.pasteText)
+                let response = await axios.post(GATEWAY + '/bzz?name=pastebee.com.txt', this.pasteText)
                 this.hash = response.data.reference;
                 this.hasPaste = true;
                 document.getElementById('texteditor').textContent = this.pasteText
                 let h_ = window.location.href.split('?')[0] + '?' + this.hash;
                 this.url = h_;
                 window.history.pushState({path:h_},'',h_);
+                this.metadata = undefined
             },
             resetPaste: function(){
                 this.pasteText = '';

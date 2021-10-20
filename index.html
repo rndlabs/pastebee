@@ -31,17 +31,20 @@
 						</router-link>
 						<a class="desktop-only" id="powered-by-swarm" href="https://www.ethswarm.org/" target="_blank"></a>
 					</div>
-				
+
 
 				<router-view>
-					
+
 				</router-view>
 
 				<!-- output -->
 				<div class="show-paste" v-show="hasPaste">
-<!-- 					<h3>Paste {{hash}}</h3> -->
 					<input class="copy-input" id="copy-input-1" :value="url" readonly>
 					<button id="copy" v-on:click="copyUrl"></button>
+					<div class="metadata" v-if="metadata">
+						<span class="name">{{metadata.name}}</span>
+						<span class="size">{{metadata.size | shortenBytes}}</span>
+					</div>
 					<!-- output -->
 					<div>
 						<div contentEditable="true" id="texteditor" placeholder="Paste text here..." @input="onInput"></div>

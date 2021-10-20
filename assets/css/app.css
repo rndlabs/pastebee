@@ -40,7 +40,7 @@ body {
 	opacity: 0 !important;
 }
 
-textarea, 
+textarea,
 #texteditor {
 	background-color: #fff;
 	width: 100%;
@@ -57,9 +57,25 @@ textarea,
 	white-space: pre-wrap;
 }
 
+.metadata{
+	font-family: monospace;
+	margin-top: 25px;
+}
+
+.metadata .name{
+	font-weight: bold;
+	color: white;
+	padding-right: 10px;
+}
+
+.metadata .size{
+	font-style: italic;
+	color: #efefef;
+}
+
 #texteditor[placeholder]:empty:before {
     content: attr(placeholder);
-    color: #888; 
+    color: #888;
 }
 
 #logo {
@@ -350,7 +366,7 @@ textarea,
 		width: 100%;
 	}
 
-	textarea, 
+	textarea,
 	#texteditor {
 		padding: 10px;
 		padding-top: 10px;
@@ -391,7 +407,7 @@ textarea,
     background-size: 1000px;
   }
 
-  textarea, 
+  textarea,
 	#texteditor {
 		/*min-height: calc(100vh - 200px - 156px - 70px - 75px - 50px);*/
 		min-height: calc(100vh - 200px - 156px - 80px);
