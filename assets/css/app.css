@@ -428,7 +428,8 @@ textarea,
 	}
 
 	#terms-content {
-		padding-top: 67px;
+		margin-top: 67px;
+		max-height: calc(95vh - 67px);
 	}
 }
 
