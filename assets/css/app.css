@@ -234,6 +234,11 @@ textarea,
 	text-decoration: underline;
 }
 
+#terms-content {
+	max-height: 95vh;
+	overflow: scroll;
+}
+
 /* About */
 
 #about-page, #terms-page {
@@ -420,6 +425,10 @@ textarea,
 		height: 32px;
 		padding-left: 10px;
     width: calc(100vw - (158px - 10px));
+	}
+
+	#terms-content {
+		padding-top: 67px;
 	}
 }
 
