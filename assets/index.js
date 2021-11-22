@@ -4,7 +4,7 @@ const META_FILE_NAME = '.swarmgatewaymeta.json'
 let h = window.location.href;
 let parsedHash = h.split(h.match(/\?/),h.length)[1];
 
-let hash, hasPaste, metadata, pasteText, url, showingAbout;
+let hash, hasPaste, metadata, pasteText, url, showingAbout, showingTerms;
 
 let baseHash;
 let href = window.location.href.split('/');
@@ -23,6 +23,7 @@ const shortenBytes = (value) => {
 let init = async () => {
 
     showAbout = false;
+    showTerms = false;
 
     if(typeof parsedHash === 'undefined'){
         hash = '';
@@ -65,6 +66,7 @@ let init = async () => {
             hasPaste: hasPaste,
             pasteText: pasteText,
             showingAbout: showingAbout,
+            showingTerms: showingTerms,
             hash: hash,
             url: url,
             gatewayLink: function(){
@@ -107,6 +109,21 @@ let init = async () => {
                 pageEl.classList.add('fade-out');
                 setTimeout(()=>{
                     this.showingAbout = false;
+                    contentEl.classList.remove('rotate-out-center');
+                    pageEl.classList.remove('fade-out');
+                }, 1000);
+
+            },
+            showTerms: function(){
+                this.showingTerms = true;
+            },
+            hideTerms: function(){
+                let contentEl = document.getElementById('terms-content');
+                let pageEl = document.getElementById('terms-page');
+                contentEl.classList.add('rotate-out-center');
+                pageEl.classList.add('fade-out');
+                setTimeout(()=>{
+                    this.showingTerms = false;
                     contentEl.classList.remove('rotate-out-center');
                     pageEl.classList.remove('fade-out');
                 }, 1000);

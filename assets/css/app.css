@@ -225,9 +225,18 @@ textarea,
 	margin-bottom: 20px;
 }
 
+#terms {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	font-family: monospace;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
 /* About */
 
-#about-page {
+#about-page, #terms-page {
 	background-color: #f8b133;
 	position: fixed;
 	top: 0;
@@ -270,6 +279,19 @@ textarea,
 
 #about-swarm:hover {
 	background-image: url(../images/swarm-logo-hover.svg);
+}
+
+#terms-page {
+	font-family: monospace;
+}
+
+#terms-page h1 {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+#terms-page p {
+	line-height: 1.4em;
 }
 
 /* Vertical Align */
