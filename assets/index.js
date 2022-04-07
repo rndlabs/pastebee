@@ -71,79 +71,82 @@ let init = async () => {
             showingTerms: showingTerms,
             hash: hash,
             url: url,
-            gatewayLink: function(){
-                return GATEWAY + '/bzz/' + this.hash
-            }
+            gatewayLink: function () {
+                return GATEWAY + "/bzz/" + this.hash;
+            },
         },
         methods: {
-            clearPasteText: function(){
-                this.pasteText = '';
+            clearPasteText: function () {
+                this.pasteText = "";
             },
-            createPaste: async function(){
+            createPaste: async function () {
                 let formData = new FormData();
                 // formData.append('pastebee.com.txt', this.pasteText);
-                let response = await axios.post(GATEWAY + '/bzz?name=pastebee.com.txt', this.pasteText)
+                let response = await axios.post(
+                    GATEWAY + "/bzz?name=pastebee.com.txt",
+                    this.pasteText
+                );
                 this.hash = response.data.reference;
                 this.hasPaste = true;
-                document.getElementById('texteditor').textContent = this.pasteText
-                let h_ = window.location.href.split('?')[0] + '?' + this.hash;
+                document.getElementById("texteditor").textContent =
+                    this.pasteText;
+                let h_ = window.location.href.split("?")[0] + "?" + this.hash;
                 this.url = h_;
-                window.history.pushState({path:h_},'',h_);
-                this.metadata = undefined
+                window.history.pushState({ path: h_ }, "", h_);
+                this.metadata = undefined;
             },
-            resetPaste: function(){
-                this.pasteText = '';
+            resetPaste: function () {
+                this.pasteText = "";
                 this.hasPaste = false;
-                this.url = '';
+                this.url = "";
             },
-            copyUrl: function(){
-                let el = document.getElementById('copy-input-1');
+            copyUrl: function () {
+                let el = document.getElementById("copy-input-1");
                 el.select();
-                document.execCommand('copy');
+                document.execCommand("copy");
             },
-            showAbout: function(){
+            showAbout: function () {
                 this.showingAbout = true;
             },
-            hideAbout: function(){
-                let contentEl = document.getElementById('about-content');
-                let pageEl = document.getElementById('about-page');
-                contentEl.classList.add('rotate-out-center');
-                pageEl.classList.add('fade-out');
-                setTimeout(()=>{
+            hideAbout: function () {
+                let contentEl = document.getElementById("about-content");
+                let pageEl = document.getElementById("about-page");
+                contentEl.classList.add("rotate-out-center");
+                pageEl.classList.add("fade-out");
+                setTimeout(() => {
                     this.showingAbout = false;
-                    contentEl.classList.remove('rotate-out-center');
-                    pageEl.classList.remove('fade-out');
+                    contentEl.classList.remove("rotate-out-center");
+                    pageEl.classList.remove("fade-out");
                 }, 1000);
-
             },
-            showTerms: function(){
+            showTerms: function () {
                 this.showingTerms = true;
             },
-            hideTerms: function(){
-                let contentEl = document.getElementById('terms-content');
-                let pageEl = document.getElementById('terms-page');
-                contentEl.classList.add('rotate-out-center');
-                pageEl.classList.add('fade-out');
-                setTimeout(()=>{
+            hideTerms: function () {
+                let contentEl = document.getElementById("terms-content");
+                let pageEl = document.getElementById("terms-page");
+                contentEl.classList.add("rotate-out-center");
+                pageEl.classList.add("fade-out");
+                setTimeout(() => {
                     this.showingTerms = false;
-                    contentEl.classList.remove('rotate-out-center');
-                    pageEl.classList.remove('fade-out');
+                    contentEl.classList.remove("rotate-out-center");
+                    pageEl.classList.remove("fade-out");
                 }, 1000);
-
             },
-            onInput: function(e){
+            onInput: function (e) {
                 this.pasteText = e.target.innerText;
 
-                console.log(this.pasteText)
-            }
+                console.log(this.pasteText);
+            },
         },
-        mounted: ()=>{
-            setTimeout(()=>document.getElementById('app').classList.remove('loading'), 100);
-        }
+        mounted: () => {
+            setTimeout(
+                () =>
+                    document.getElementById("app").classList.remove("loading"),
+                100
+            );
+        },
     });
-
-
-
 };
 
 init();
