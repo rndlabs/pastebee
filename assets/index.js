@@ -1,66 +1,68 @@
-const GATEWAY = 'https://bee-9.gateway.ethswarm.org'
-const META_FILE_NAME = '.swarmgatewaymeta.json'
+const GATEWAY = "https://api.gateway.ethswarm.org";
+const META_FILE_NAME = ".swarmgatewaymeta.json";
 
 let h = window.location.href;
-let parsedHash = h.split(h.match(/\?/),h.length)[1];
+let parsedHash = h.split(h.match(/\?/), h.length)[1];
 
 let hash, hasPaste, metadata, pasteText, url, showingAbout, showingTerms;
 
 let baseHash;
-let href = window.location.href.split('/');
-if(href.indexOf('bzz') > -1){
-     baseHash = href[4];
+let href = window.location.href.split("/");
+if (href.indexOf("bzz") > -1) {
+    baseHash = href[4];
 }
 
 const shortenBytes = (value) => {
-    if (value < 1e3) return `${value} bytes`
+    if (value < 1e3) return `${value} bytes`;
 
-    if (value < 1e6) return `${(value / 1e3).toFixed(2)} kB`
+    if (value < 1e6) return `${(value / 1e3).toFixed(2)} kB`;
 
-    return `${(value / 1e6).toFixed(2)} MB`
-}
+    return `${(value / 1e6).toFixed(2)} MB`;
+};
 
 let init = async () => {
-
     showAbout = false;
     showTerms = false;
 
-    if(typeof parsedHash === 'undefined'){
-        hash = '';
-        pasteText = '';
-        url = '';
+    if (typeof parsedHash === "undefined") {
+        hash = "";
+        pasteText = "";
+        url = "";
         hasPaste = false;
-    }else{
+    } else {
         hash = parsedHash;
         url = window.location.href;
         hasPaste = true;
-        await axios.get(GATEWAY + '/bzz/' + parsedHash).then((r_)=>{
+        await axios.get(GATEWAY + "/bzz/" + parsedHash).then((r_) => {
             pasteText = r_.data;
-            document.getElementById('texteditor').textContent = pasteText
+            document.getElementById("texteditor").textContent = pasteText;
         });
 
         // Fetch metadata file
-        await axios.get(GATEWAY + '/bzz/' + parsedHash + '/' + META_FILE_NAME).then((r_)=>{
-            metadata = r_.data;
-        }).catch(e => {
-            // If not found, than we ignore, otherwise at least propagate to console
-            if ( !e.response || e.response.status !== 404) {
-                console.error(e)
-            }
-        });
+        await axios
+            .get(GATEWAY + "/bzz/" + parsedHash + "/" + META_FILE_NAME)
+            .then((r_) => {
+                metadata = r_.data;
+            })
+            .catch((e) => {
+                // If not found, than we ignore, otherwise at least propagate to console
+                if (!e.response || e.response.status !== 404) {
+                    console.error(e);
+                }
+            });
     }
 
     const router = new VueRouter({
-      base: '/',
-      mode: 'history',
-      // routes: routes
+        base: "/",
+        mode: "history",
+        // routes: routes
     });
 
-    Vue.filter('shortenBytes', shortenBytes)
+    Vue.filter("shortenBytes", shortenBytes);
 
     let app = new Vue({
         router: router,
-        el: '#app',
+        el: "#app",
         data: {
             metadata: metadata,
             hasPaste: hasPaste,
