@@ -9,7 +9,7 @@ Roadmap
 
 For development
 
-1. `yarn`
+1. `pnpm install`
 2. `yarn dev`
 
 To upload to Bee
