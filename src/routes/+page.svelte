@@ -1,30 +1,32 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import About from './lib/About.svelte';
-	import Terms from './lib/Terms.svelte';
-	import Footer from './lib/Footer.svelte';
-	import Paste from './lib/Paste.svelte';
+	import About from '../lib/components/About.svelte';
+	import Terms from '../lib/components/Terms.svelte';
+	import Footer from '../lib/components/Footer.svelte';
+	import Paste from '../lib/components/Paste.svelte';
+
+	import { numPeers } from '../lib/waku';
 
 	let paste: Paste;
 
-	onMount(() => {
+	onMount(async () => {
 		setTimeout(() => {
-			document.getElementById('app').classList.remove('loading');
+			document.getElementById('app')!!.classList.remove('loading');
 		}, 100);
 	});
 
-	// write a handler for the URL history, when the user browsers to a
-	// page without the /p/ prefix, we should reset the paste
-	function handleUrlChange() {
-		const url = window.location.pathname;
-		if (url === '/') {
-			paste.reset();
-		}
-	}
+	// // write a handler for the URL history, when the user browsers to a
+	// // page without the /p/ prefix, we should reset the paste
+	// function handleUrlChange() {
+	// 	const url = window.location.pathname;
+	// 	if (url === '/') {
+	// 		paste.reset();
+	// 	}
+	// }
 
-	// handle the event of changing the URL
-	window.addEventListener('popstate', handleUrlChange);
+	// // handle the event of changing the URL
+	// window.addEventListener('popstate', handleUrlChange);
 
 	const hideAnimation = (
 		contentEl: HTMLElement,
@@ -102,7 +104,11 @@
 
 			{#if showingTerms}<Terms hideHandler={hideTerms} />{/if}
 			{#if showingAbout}<About hideHandler={hideAbout} />{/if}
-
+			{#if $numPeers > 0}
+				<div id="connected" />
+			{:else}
+				<div id="disconnected" />
+			{/if}
 			<Paste bind:this={paste} />
 		</div>
 		<!-- .container -->

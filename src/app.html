@@ -18,10 +18,11 @@
 			name="description"
 			content="The all new Pastebee.  Bringing you unstoppable publishing powered by the mighty Swarm."
 		/>
+		%sveltekit.head%
+		<link rel="stylesheet" href="/app.css" />
 	</head>
 	<body>
-		<div id="app"></div>
-		<script type="module" src="/src/main.ts"></script>
+		<div id="app">%sveltekit.body%</div>
 	</body>
 </html>
 
