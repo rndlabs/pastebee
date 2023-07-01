@@ -9,7 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"proto": "rimraf src/lib/proto/*.ts; protons src/lib/proto/*.proto"
 	},
 	"devDependencies": {
 		"@fontsource/source-sans-pro": "^4.5.11",
@@ -36,6 +37,8 @@
 		"knip": "^2.9.0",
 		"prettier": "^2.8.7",
 		"prettier-plugin-svelte": "^2.10.0",
+		"protons": "^7.0.2",
+		"rimraf": "^5.0.1",
 		"sass": "^1.62.0",
 		"svelte": "^3.58.0",
 		"svelte-check": "^3.2.0",

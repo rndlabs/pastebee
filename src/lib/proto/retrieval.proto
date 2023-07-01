@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message Request {
+    bytes address = 1;
+}
+
+message Response {
+    bytes data = 1;
+    bytes stamp = 2;
+}

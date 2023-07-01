@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Ping {
+    // the timestamp when the ping was sent
+    uint64 timestamp = 1;
+}
+
+message Pong {
+    // the timestamp when the pong was sent
+    uint64 timestamp = 1;
+    // an auto-generated address at which to message the bridge
+    bytes address = 2;
+}
