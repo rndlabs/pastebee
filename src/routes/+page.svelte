@@ -105,7 +105,7 @@
 			{#if showingTerms}<Terms hideHandler={hideTerms} />{/if}
 			{#if showingAbout}<About hideHandler={hideAbout} />{/if}
 			{#if $numPeers > 0}
-				<div id="connected" />
+				<div id="connected">Connected to {$numPeers} peer(s)</div>
 			{:else}
 				<div id="disconnected" />
 			{/if}
