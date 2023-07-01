@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message Delivery {
+    // address of the chunk delivered
+    bytes address = 1;
+    // data of the chunk delivered
+    bytes data = 2;
+    // a stamp from a valid batch attesting the chunk
+    bytes stamp = 3;
+}
+
+message Receipt {
+    // Address of the chunk
+    bytes address = 1;
+    // Signature from the targe delivered to
+    bytes signature = 2;
+    // A nonce
+    bytes nonce = 3;
+}
