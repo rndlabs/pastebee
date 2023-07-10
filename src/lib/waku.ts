@@ -1,9 +1,8 @@
-import { writable } from 'svelte/store';
+import { writable, get, derived } from 'svelte/store';
 
-import { createLightNode, waitForRemotePeer, createEncoder, createDecoder, createRelayNode } from '@waku/sdk';
-import { type LightNode, type IDecodedMessage, Protocols, type RelayNode } from '@waku/interfaces';
+import { createLightNode, waitForRemotePeer, createEncoder, createDecoder } from '@waku/sdk';
+import { type LightNode, type IDecodedMessage, Protocols } from '@waku/interfaces';
 import * as secp from '@noble/secp256k1';
-import { sha256 } from '@noble/hashes/sha256';
 import { bootstrap } from '@libp2p/bootstrap'
 
 const PING_KEEPALIVE = 30;
@@ -18,7 +17,7 @@ const topicVersion = 1;
 const numPeers = writable(0);
 
 export function getTopic(contentTopic: string) {
-	return `${topicApp}/${topicVersion}/${contentTopic}`;
+	return `/${topicApp}/${topicVersion}/${contentTopic}/proto`;
 }
 
 /**
@@ -27,12 +26,12 @@ export function getTopic(contentTopic: string) {
  * @returns A waku node
  */
 async function connectWaku() {
-	const waku = await createRelayNode({
-		emitSelf: true,
+	const waku = await createLightNode({
 		defaultBootstrap: false,
 		libp2p: {
 			peerDiscovery: [bootstrap({ list: BOOTSTRAP_LIST })],
 		},
+		pubSubTopic: "/waku/2/dev-waku/proto",
 	});
 
 	// --- libp2p events need to come before waku.start()
@@ -46,11 +45,12 @@ async function connectWaku() {
 		console.log('peer:disconnect');
 		numPeers.update((n) => n - 1);
 	});
-
+	
 	// --- attempt to connect to the waku network
 
 	await waku.start();
-	await waitForRemotePeer(waku, [Protocols.Relay]);
+	await waitForRemotePeer(waku, [Protocols.LightPush, Protocols.Filter]);
+
 
 	return waku;
 }
@@ -63,13 +63,14 @@ async function connectWaku() {
  * @returns the unsubscribe function
  */
 async function subscribe(
-	waku: RelayNode,
+	waku: LightNode,
 	topic: string,
 	callback: (decodedMessage: IDecodedMessage) => void
 ) {
 	const contentTopic = getTopic(topic);
+	console.log('subscribing to', contentTopic);
 	const messageDecoder = createDecoder(contentTopic);
-	const unsubscribe = await waku.relay.subscribe([messageDecoder], callback);
+	const unsubscribe = await waku.filter.subscribe([messageDecoder], callback);
 
 	return unsubscribe;
 }
@@ -81,24 +82,35 @@ async function subscribe(
  * @param payload bytes to send
  * @returns SendResult
  */
-async function send(waku: RelayNode, topic: string, payload: Uint8Array) {
+async function send(waku: LightNode, topic: string, payload: Uint8Array) {
 	const contentTopic = getTopic(topic);
 	const encoder = createEncoder({ contentTopic });
 
-	return await waku.relay.send(encoder, { payload });
+	return await waku.lightPush.send(encoder, { payload });
+}
 }
 
 export interface Session {
-	waku: RelayNode;
+	waku: LightNode;
 	unsubscribe: () => void;
 }
 
-// waku
-const wakuStore = writable<any>(null);
+export async function create(options: Options | undefined = undefined): Promise<Session> {
+	const privateKeyHex = options?.privateKeyHex;
+	const privateKey = privateKeyHex ? secp.etc.hexToBytes(privateKeyHex) : secp.utils.randomPrivateKey();
+	const publicKey = secp.getPublicKey(privateKey);
 
-// Define a timer at which to initialize the Waku node
-setTimeout(async () => {
-	wakuStore.set(await connectWaku());
-}, 1000);
+	const waku = await connectWaku();
+
+	return {
+		waku,
+		unsubscribe: () => {
+		}
+	}
+}
+
+// --- data structures
+
+
 
 export { numPeers, wakuStore };
