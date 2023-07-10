@@ -1,6 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { configureWagmi, connection, disconnectWagmi, connected, signerAddress } from 'svelte-wagmi';
+	import {
+		configureWagmi,
+		connected,
+		disconnectWagmi,
+		signerAddress,
+		connection,
+		loading,
+		chainId,
+		web3Modal,
+		wagmiLoaded
+	} from '$lib/stores/wagmi';
+
+	import { postageStampAbi } from '$lib/abi';
+	import { getContract, prepareWriteContract, sendTransaction, writeContract } from '@wagmi/core'
 
 	import About from '$lib/components/About.svelte';
 	import Terms from '$lib/components/Terms.svelte';
@@ -8,11 +21,14 @@
 	import Paste from '$lib/components/Paste.svelte';
 
 	import { create, numPeers, numRelays, relays, type Session } from '$lib/waku';
+	import { parseEther } from 'ethers';
 
 	let session: Session | undefined;
 	let paste: Paste;
 
 	onMount(async () => {
+		await configureWagmi();
+
 		// initialise the session
 		session = await create();
 
@@ -20,12 +36,6 @@
 			document.getElementById('app')!!.classList.remove('loading');
 		}, 100);
 	});
-
-	configureWagmi()
-
-	async function connectToEthereum() {
-		await connection(100);
-	}
 
 	// // write a handler for the URL history, when the user browsers to a
 	// // page without the /p/ prefix, we should reset the paste
@@ -120,12 +130,71 @@
 			{:else}
 				<div id="disconnected" />
 			{/if}
-			{#if $connected}
-			<p>Connected to Ethereum: {$signerAddress}</p>
-			<button on:click="{disconnectWagmi}">Disconnect from Ethereum</button>
+			{#if wagmiLoaded}
+				<h1>Svelte Wagmi</h1>
+				<p>
+					Svelte Wagmi is a package that provides a collection of Svelte stores and functions for
+					interacting with the Ethereum network. It utilizes the @wagmi/core library for connecting to
+					Ethereum networks and signing transactions.
+				</p>
+				{#if $loading}
+					<div>
+						<span class="loader" />Waiting...
+					</div>
+				{:else if $connected}
+					<p>{$signerAddress}</p>
+					<p>chain ID: {$chainId}</p>
+					<button on:click={disconnectWagmi}>disconnect</button>
+				{:else}
+					<p>not connected</p>
+					<p>Connect With walletconnect</p>
+					<button
+						on:click={async () => {
+							$loading = true;
+							await $web3Modal.openModal();
+							$loading = false;
+						}}
+					>
+						{#if $loading}
+							<span class="loader" />Connecting...
+						{:else}
+							connect
+						{/if}
+					</button>
+		
+					<p>Connect With InjectedConnector</p>
+					<button
+						on:click={async () => {
+							$loading = true;
+							await connection(100);
+							$loading = false;
+
+							const contract = getContract({
+								address: '0x30d155478eF27Ab32A1D578BE7b84BC5988aF381',
+								abi: postageStampAbi,
+								chainId: 100,
+							})
+
+							console.log(await contract.read.batches(['0x0e8366a6fdac185b6f0327dc89af99e67d9d3b3f2af22432542dc5971065c1df']));
+
+							const { hash } = await sendTransaction({
+							  to: '0x30d155478eF27Ab32A1D578BE7b84BC5988aF381',
+							  value: parseEther('0.01'),
+							  chainId: 100,
+							})
+
+							// const { hash } = await writeContract(request)
+						}}
+					>
+						{#if $loading}
+							<span class="loader" />Connecting...
+						{:else}
+							connect
+						{/if}
+					</button>
+				{/if}
 			{:else}
-			<p>Not connected to Ethereum</p>
-			<button on:click="{connectToEthereum}">Connect to Ethereum</button>
+				<h1>Svelte Wagmi Not Configured</h1>
 			{/if}
 			{#if $numRelays > 0}
 				<div id="connected">Connected to {$numRelays} relay(s)</div>
