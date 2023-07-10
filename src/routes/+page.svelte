@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import About from '../lib/components/About.svelte';
-	import Terms from '../lib/components/Terms.svelte';
-	import Footer from '../lib/components/Footer.svelte';
-	import Paste from '../lib/components/Paste.svelte';
+	import About from '$lib/components/About.svelte';
+	import Terms from '$lib/components/Terms.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import Paste from '$lib/components/Paste.svelte';
 
 	import { create, numPeers, numRelays, relays, type Session } from '$lib/waku';
 
