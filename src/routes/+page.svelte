@@ -6,11 +6,15 @@
 	import Footer from '../lib/components/Footer.svelte';
 	import Paste from '../lib/components/Paste.svelte';
 
-	import { numPeers } from '../lib/waku';
+	import { create, numPeers, numRelays, relays, type Session } from '$lib/waku';
 
+	let session: Session | undefined;
 	let paste: Paste;
 
 	onMount(async () => {
+		// initialise the session
+		session = await create();
+
 		setTimeout(() => {
 			document.getElementById('app')!!.classList.remove('loading');
 		}, 100);
@@ -106,6 +110,12 @@
 			{#if showingAbout}<About hideHandler={hideAbout} />{/if}
 			{#if $numPeers > 0}
 				<div id="connected">Connected to {$numPeers} peer(s)</div>
+			{:else}
+				<div id="disconnected" />
+			{/if}
+			{#if $numRelays > 0}
+				<div id="connected">Connected to {$numRelays} relay(s)</div>
+				<div>{JSON.stringify($relays)}</div>
 			{:else}
 				<div id="disconnected" />
 			{/if}
