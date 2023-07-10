@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { configureWagmi, connection, disconnectWagmi, connected, signerAddress } from 'svelte-wagmi';
 
 	import About from '$lib/components/About.svelte';
 	import Terms from '$lib/components/Terms.svelte';
@@ -19,6 +20,12 @@
 			document.getElementById('app')!!.classList.remove('loading');
 		}, 100);
 	});
+
+	configureWagmi()
+
+	async function connectToEthereum() {
+		await connection(100);
+	}
 
 	// // write a handler for the URL history, when the user browsers to a
 	// // page without the /p/ prefix, we should reset the paste
@@ -112,6 +119,13 @@
 				<div id="connected">Connected to {$numPeers} peer(s)</div>
 			{:else}
 				<div id="disconnected" />
+			{/if}
+			{#if $connected}
+			<p>Connected to Ethereum: {$signerAddress}</p>
+			<button on:click="{disconnectWagmi}">Disconnect from Ethereum</button>
+			{:else}
+			<p>Not connected to Ethereum</p>
+			<button on:click="{connectToEthereum}">Connect to Ethereum</button>
 			{/if}
 			{#if $numRelays > 0}
 				<div id="connected">Connected to {$numRelays} relay(s)</div>
