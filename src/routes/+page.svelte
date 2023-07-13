@@ -120,7 +120,8 @@
 					id="powered-by-swarm"
 					href="https://www.ethswarm.org/"
 					target="_blank"
-				/>
+					title="powered by swarm"
+				>
 			</div>
 
 			{#if showingTerms}<Terms hideHandler={hideTerms} />{/if}

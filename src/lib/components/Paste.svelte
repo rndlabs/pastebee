@@ -1,4 +1,6 @@
 <script lang="ts">
+	import stamper from "../stamper"
+
 	let hasPaste = false;
 	let pasteText: string;
 	let url: string;
@@ -15,6 +17,8 @@
 	}
 
 	function createPaste() {
+
+		stamper();
 		// 1. take the pasteText and break it into chunks
 		// 2. upload each chunk to swarm
 		// 3. get the bmt root hash
