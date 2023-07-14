@@ -16,16 +16,15 @@
 		// goto(`/`);
 	}
 
-	function createPaste() {
+	async function createPaste() {
 
-		stamper();
 		// 1. take the pasteText and break it into chunks
 		// 2. upload each chunk to swarm
 		// 3. get the bmt root hash
 		console.log('createPaste was triggered');
-		console.log(pasteText);
+		let stamped = await stamper(Buffer.from(pasteText));
 		// an example of a bmt root hash
-		const bmtRootHash = '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef';
+		const bmtRootHash = stamped[0].address;
 		hasPaste = true;
 		document.getElementById('texteditor')!!.textContent = pasteText;
 

@@ -14,33 +14,19 @@ async function generateBatchId(owner: string, nonce: string): Promise<string> {
 const POSTAGE_STAMP_ADDRESS = '0x30d155478eF27Ab32A1D578BE7b84BC5988aF381';
 const BZZ_TOKEN_ADDRESS = '0xdBF3Ea6F5beE45c02255B2c26a16F300502F68da';
 
-// const batchID =
+// const batchID =`
 //   "50f705e0d6f733c38b525848603368884503eb4755796b869dd1b75c7ebcb5af";
 const privateKey = 'x'; //0x4e9a9cEe6ddcB2baB630F3ED2626e08Afc582696 stamp burner
 
 const timeStamp = 1688492510652;
-const payload = new Uint8Array([0, 1, 2]);
+// const payload = new Uint8Array([0, 1, 2]);
 
 async function wait(ms: number) {
 	return new Promise((res) => setTimeout(res, ms));
 }
 
-async function post(url: string, stamp: string, payload: Buffer) {
-	const req = new XMLHttpRequest();
-	req.open('POST', url, true);
-	req.onload = (event) => {
-		return event;
-	};
 
-	req.setRequestHeader("Swarm-Postage-Stamp", stamp)
-
-
-	const blob = new Blob([payload.buffer]);
-
-	req.send(blob);
-}
-
-export default async function stamper() {
+export default async function stamper(payload: Buffer) {
 	console.log('test');
 	const chunkedFile = makeChunkedFile(payload);
 	let provider = new JsonRpcProvider(
@@ -92,7 +78,7 @@ export default async function stamper() {
 			await wait(1000);
 		}
 	} else {
-		batchId = '0x1b3f6651961c5288879e529deaf27c95346a1de29e62f07fd3e216a8bee3c2d8';
+		batchId = '0x42e17ad77d64c6eb14c93886dc04aa937dd69c5b7e0186277b44155bfefacb3a';
 	}
 
 	const chunkedStamped = await chunkerStamper(payload, batchId.substring(2), privateKey, timeStamp);
@@ -104,26 +90,9 @@ export default async function stamper() {
 	const headers = {
 		'Swarm-Postage-Stamp': chunkedStamped[0].stamp.toString('hex')
 	};
-	// let response = await axios.post('http://localhost:1633/chunks', chunkedStamped[0].payload, {
-	// 	headers
-	// });
+	let response = await axios.post('http://localhost:1633/chunks', chunkedStamped[0].payload, {
+		headers
+	});
 
-	// const options = {
-	// 	method: 'POST',
-	// 	url: 'http://localhost:1633/chunks',
-	// 	headers,
-	// 	data: chunkedStamped[0].payload
-	// };
-
-	// let response = await axios.request(options);
-
-	// let response = await fetch('http://localhost:1633/chunks', {
-	// 	method: 'POST',
-	// 	headers,
-	// 	body: chunkedStamped[0].payload
-	// });
-
-	let response = await post("http://localhost:1633/chunks", chunkedStamped[0].stamp.toString('hex'), chunkedStamped[0].payload);
-
-	// console.log(response);
+	return chunkedStamped;
 }
