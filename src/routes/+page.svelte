@@ -13,21 +13,28 @@
 	} from '$lib/stores/wagmi';
 
 	import { postageStampAbi } from '$lib/abi';
-	import { getContract, prepareWriteContract, sendTransaction, writeContract } from '@wagmi/core'
+	import { getContract, sendTransaction } from '@wagmi/core'
 
 	import About from '$lib/components/About.svelte';
 	import Terms from '$lib/components/Terms.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Paste from '$lib/components/Paste.svelte';
 
-	import { create, numPeers, numRelays, relays, type Session } from '$lib/waku';
+	import { create, getChunk, numPeers, numRelays, relays, type Session } from '$lib/waku';
+
 	import { parseEther } from 'ethers';
+	import ImageViewer from '$lib/components/ImageViewer.svelte';
+	import init, { ChunkInfo, get_chunk, get_chunk_info } from 'swarm-wasm-lib';
 
 	let session: Session | undefined;
 	let paste: Paste;
 
+	let chunk: ChunkInfo | undefined;
+
 	onMount(async () => {
 		await configureWagmi();
+
+		await init();
 
 		// initialise the session
 		session = await create();
@@ -106,6 +113,10 @@
 			}
 		);
 	};
+
+	const retrievalRequest = async () => {
+		chunk = await get_chunk('0xc14deb22136c927f19942b2e45de5c25b65be4e95757731200dadd2b8dd0f1c8', async (chunk: string) => await getChunk(session?.waku!, chunk));
+	}
 </script>
 
 <main>
@@ -196,9 +207,13 @@
 			{:else}
 				<h1>Svelte Wagmi Not Configured</h1>
 			{/if}
+			{#if chunk}
+				<ImageViewer imageBytes={chunk.data} />
+			{/if}
 			{#if $numRelays > 0}
 				<div id="connected">Connected to {$numRelays} relay(s)</div>
 				<div>{JSON.stringify($relays)}</div>
+				<div><button on:click={retrievalRequest}>Get chunk</button></div>
 			{:else}
 				<div id="disconnected" />
 			{/if}
