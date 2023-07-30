@@ -52,6 +52,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@rndlabs/swarm-wasm-lib": "^0.1.0",
 		"@web3modal/ethereum": "^2.6.2",
 		"@web3modal/html": "^2.6.2",
 		"protons-runtime": "^5.0.1",
