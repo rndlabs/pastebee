@@ -1,18 +1,20 @@
 import { writable, get, derived } from 'svelte/store';
 
 import { createLightNode, waitForRemotePeer, createEncoder, createDecoder } from '@waku/sdk';
-import { type LightNode, type IDecodedMessage, Protocols } from '@waku/interfaces';
+import { type LightNode, type IDecodedMessage, Protocols, type Unsubscribe } from '@waku/interfaces';
 import * as secp from '@noble/secp256k1';
 import { bootstrap } from '@libp2p/bootstrap'
-import { hexlify } from 'ethers';
+import { getBytes, hexlify } from 'ethers';
 
 import { Ping, Pong } from './proto/discovery';
-import type { Request, Response } from './proto/retrieval';
+import { Response, Request } from './proto/retrieval';
 import type { Receipt, Delivery } from './proto/pushsync';
+
+import { get_chunk, get_chunk_info } from '@rndlabs/swarm-wasm-lib';
 
 const PING_KEEPALIVE = 30;
 const BOOTSTRAP_LIST = [
-	'/ip4/127.0.0.1/tcp/8000/ws/p2p/16Uiu2HAmPNcgHTD1Au6avQSVemez62ApCxVrDVmEvCgCEXkx4J6D',
+	'/ip4/127.0.0.1/tcp/8000/ws/p2p/16Uiu2HAmUyv3ghfFzi9R4Hae36TgDavNYpoAuQcDEVr3RveusaXv',
 ]
 
 const topicApp = 'swarm-waku';
@@ -38,7 +40,7 @@ async function connectWaku() {
 		libp2p: {
 			peerDiscovery: [bootstrap({ list: BOOTSTRAP_LIST })],
 		},
-		pubSubTopic: "/waku/2/dev-waku/proto",
+		pubSubTopic: "/waku/2/default-waku/proto",
 	});
 
 	// --- libp2p events need to come before waku.start()
@@ -58,14 +60,13 @@ async function connectWaku() {
 	await waku.start();
 	await waitForRemotePeer(waku, [Protocols.LightPush, Protocols.Filter]);
 
-	// run the discovery protocol
-	discovery(waku);
+	// Do not run any protocols here, we will run them in the create function!
 
 	return waku;
 }
 
 /**
- * Subscribe to a topic and process the messages using the callback.
+ * A helper function for protocols to use when they want to subscribe to a topic.
  * @param waku relay node to use
  * @param topic within the app to use for the message
  * @param callback used to process the message
@@ -85,23 +86,20 @@ async function subscribe(
 }
 
 /**
- * Send a message to a topic.
+ * A helper function for protocols to send messages to a topic.
  * @param waku relay node to use
  * @param topic within the app to send the message to
  * @param payload bytes to send
  * @returns SendResult
  */
-async function send(waku: LightNode, topic: string, payload: Uint8Array) {
+export async function send(waku: LightNode, topic: string, payload: Uint8Array) {
 	const contentTopic = getTopic(topic);
 	const encoder = createEncoder({ contentTopic });
 
 	return await waku.lightPush.send(encoder, { payload });
 }
 
-interface CallbackOptions {
-}
-
-interface Options extends CallbackOptions {
+interface Options {
 	privateKeyHex?: string;
 }
 
@@ -109,10 +107,19 @@ export interface Session {
 	// record the swarm relays for the session
 	swarmRelays: string[];
 
+	// public and private keys
+	privateKeyHex: string;
+	publicKeyHex: string;
+
 	waku: LightNode;
 	unsubscribe: () => void;
 }
 
+/**
+ * Get a session object for waku that can be used to send and receive messages.
+ * @param options for the session
+ * @returns A session object
+ */
 export async function create(options: Options | undefined = undefined): Promise<Session> {
 	const privateKeyHex = options?.privateKeyHex;
 	const privateKey = privateKeyHex ? secp.etc.hexToBytes(privateKeyHex) : secp.utils.randomPrivateKey();
@@ -122,37 +129,52 @@ export async function create(options: Options | undefined = undefined): Promise<
 
 	// run the protocols
 	const unsubscribeDiscovery = discovery(waku);
+	const unsubscribeRetrieval = retrieval(waku);
 
 	return {
 		swarmRelays: [],
 		waku,
-		unsubscribe: () => {
+
+		// --- keys
+		privateKeyHex: secp.etc.bytesToHex(privateKey),
+		publicKeyHex: secp.etc.bytesToHex(publicKey),
+
+		unsubscribe: async () => {
 			// stop the discovery protocol by cancelling the timer
 			clearInterval(unsubscribeDiscovery);
+			(await unsubscribeRetrieval)();
 		}
 	}
 }
 
-// --- data structures
+// --- protocols
+
+// --- discovery (ping/pong)
+
+// --- discovery: data structures
 
 // define a data structure that stores:
 // 1. the address of each swarm relay
 // 2. the latency to each swarm relay
 // 3. an enum that indicates the status of the swarm relay (active, unknown, inactive)
 
+enum RelayStatus {
+	Active,
+	Unknown,
+	Inactive
+}
+
 interface SwarmRelay {
 	lastSeen: number;
 	latency: number;
-	status: 'active' | 'unknown' | 'inactive';
+	status: RelayStatus;
 }
 
 interface SwarmRelays {
 	[address: string]: SwarmRelay;
 }
 
-// --- protocols
-
-// --- discovery (ping/pong)
+// --- discovery: logic
 
 function discovery(waku: LightNode): NodeJS.Timer {
 	// we will ping for relays every 30 seconds
@@ -161,8 +183,8 @@ function discovery(waku: LightNode): NodeJS.Timer {
 		const _relays = get(relays);
 		for (const address in _relays) {
 			// only set the status to unknown if it is active
-			if (_relays[address].status === 'active') {
-				_relays[address].status = 'unknown';
+			if (_relays[address].status === RelayStatus.Active) {
+				_relays[address].status = RelayStatus.Unknown;
 			}
 		}
 		relays.set(_relays);
@@ -190,12 +212,12 @@ function discovery(waku: LightNode): NodeJS.Timer {
 				if (addr in _relays) {
 					_relays[addr].lastSeen = Date.now();
 					_relays[addr].latency = Number(rtt);
-					_relays[addr].status = 'active';
+					_relays[addr].status = RelayStatus.Active;
 				} else {
 					_relays[addr] = {
 						lastSeen: Date.now(),
 						latency: Number(rtt),
-						status: 'active'
+						status: RelayStatus.Active
 					};
 				}
 	
@@ -217,8 +239,8 @@ function discovery(waku: LightNode): NodeJS.Timer {
 
 			// set the status of all relayers that are still unknown to inactive
 			for (const address in _relays) {
-				if (_relays[address].status === 'unknown') {
-					_relays[address].status = 'inactive';
+				if (_relays[address].status === RelayStatus.Unknown) {
+					_relays[address].status = RelayStatus.Inactive;
 				}
 			}
 
@@ -229,14 +251,65 @@ function discovery(waku: LightNode): NodeJS.Timer {
 
 // --- retrieval (request/response)
 
-function handleResponse(response: Response) {
-	console.log('response', response);
+// --- retrieval: data structures
+
+const chunkCallbacks = new Map<string, (chunk: Uint8Array) => void>();
+
+// --- retrieval: logic
+
+async function retrieval(waku: LightNode): Promise<Unsubscribe> {
+	const unsubscribe = await subscribe(waku, 'retrieval-delivery', (response) => {
+		const decoded = Response.decode(response.payload);
+
+		const { address } = get_chunk_info(decoded.data)
+
+		// Check if there is a callback for this chunk
+		const addr = '0x' + address;
+		const callback = chunkCallbacks.get(addr);
+		if (callback === undefined) {
+			console.log('no callback for chunk', addr)
+			return;
+		}
+
+		// Call the callback with the raw payload
+		callback(decoded.data);
+	});
+
+	return unsubscribe;
+}
+
+export async function getChunk(waku: LightNode, address: string): Promise<Uint8Array> {
+	const chunk = await Promise.race([
+		new Promise<Uint8Array>((resolve, reject) => {
+			const callback = (chunk: Uint8Array) => {
+				resolve(chunk);
+			};
+
+			console.log('requesting chunk', address);
+			chunkCallbacks.set(address, callback);
+
+			// Send the request
+			send(waku, 'retrieval-request', Request.encode({address: getBytes(address)}));
+		}),
+		new Promise<undefined>((resolve) => {
+			setTimeout(() => {
+				resolve(undefined);
+			}, 5000);
+		})
+	])
+
+	// ensure that the callback is removed
+	chunkCallbacks.delete(hexlify(address));
+
+	if (chunk === undefined) {
+		throw new Error('timeout');
+	}
+
+	return chunk;
 }
 
 // --- pushsync (receipt/delivery)
 
-function handleReceipt(receipt: Receipt) {
-	console.log('receipt', receipt);
-}
+// TBD
 
 export { numPeers, relays, numRelays };
