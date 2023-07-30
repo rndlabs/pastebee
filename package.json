@@ -55,6 +55,7 @@
 		"@web3modal/ethereum": "^2.6.2",
 		"@web3modal/html": "^2.6.2",
 		"protons-runtime": "^5.0.1",
-		"viem": "^1.2.12"
+		"viem": "^1.2.12",
+		"vite-plugin-wasm": "^3.2.2"
 	}
 }
