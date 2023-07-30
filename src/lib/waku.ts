@@ -1,9 +1,14 @@
 import { writable, get, derived } from 'svelte/store';
 
 import { createLightNode, waitForRemotePeer, createEncoder, createDecoder } from '@waku/sdk';
-import { type LightNode, type IDecodedMessage, Protocols, type Unsubscribe } from '@waku/interfaces';
+import {
+	type LightNode,
+	type IDecodedMessage,
+	Protocols,
+	type Unsubscribe
+} from '@waku/interfaces';
 import * as secp from '@noble/secp256k1';
-import { bootstrap } from '@libp2p/bootstrap'
+import { bootstrap } from '@libp2p/bootstrap';
 import { getBytes, hexlify } from 'ethers';
 
 import { Ping, Pong } from './proto/discovery';
@@ -14,8 +19,8 @@ import { get_chunk, get_chunk_info } from '@rndlabs/swarm-wasm-lib';
 
 const PING_KEEPALIVE = 30;
 const BOOTSTRAP_LIST = [
-	'/ip4/127.0.0.1/tcp/8000/ws/p2p/16Uiu2HAmUyv3ghfFzi9R4Hae36TgDavNYpoAuQcDEVr3RveusaXv',
-]
+	'/ip4/127.0.0.1/tcp/8000/ws/p2p/16Uiu2HAmUyv3ghfFzi9R4Hae36TgDavNYpoAuQcDEVr3RveusaXv'
+];
 
 const topicApp = 'swarm-waku';
 const topicVersion = 1;
@@ -38,9 +43,9 @@ async function connectWaku() {
 	const waku = await createLightNode({
 		defaultBootstrap: false,
 		libp2p: {
-			peerDiscovery: [bootstrap({ list: BOOTSTRAP_LIST })],
+			peerDiscovery: [bootstrap({ list: BOOTSTRAP_LIST })]
 		},
-		pubSubTopic: "/waku/2/default-waku/proto",
+		pubSubTopic: '/waku/2/default-waku/proto'
 	});
 
 	// --- libp2p events need to come before waku.start()
@@ -54,7 +59,7 @@ async function connectWaku() {
 		console.log('peer:disconnect');
 		numPeers.update((n) => n - 1);
 	});
-	
+
 	// --- attempt to connect to the waku network
 
 	await waku.start();
@@ -122,7 +127,9 @@ export interface Session {
  */
 export async function create(options: Options | undefined = undefined): Promise<Session> {
 	const privateKeyHex = options?.privateKeyHex;
-	const privateKey = privateKeyHex ? secp.etc.hexToBytes(privateKeyHex) : secp.utils.randomPrivateKey();
+	const privateKey = privateKeyHex
+		? secp.etc.hexToBytes(privateKeyHex)
+		: secp.utils.randomPrivateKey();
 	const publicKey = secp.getPublicKey(privateKey);
 
 	const waku = await connectWaku();
@@ -144,7 +151,7 @@ export async function create(options: Options | undefined = undefined): Promise<
 			clearInterval(unsubscribeDiscovery);
 			(await unsubscribeRetrieval)();
 		}
-	}
+	};
 }
 
 // --- protocols
@@ -194,7 +201,7 @@ function discovery(waku: LightNode): NodeJS.Timer {
 			const p = Pong.decode(pong.payload);
 			const addr = hexlify(p.address);
 			console.log('pong', addr);
-			
+
 			// measure the round trip time
 			if (sendTimestamp === undefined) {
 				return;
@@ -220,9 +227,9 @@ function discovery(waku: LightNode): NodeJS.Timer {
 						status: RelayStatus.Active
 					};
 				}
-	
+
 				// update the relays
-				relays.set(_relays);	
+				relays.set(_relays);
 			} catch (e) {
 				console.log('error', e);
 			}
@@ -230,7 +237,7 @@ function discovery(waku: LightNode): NodeJS.Timer {
 
 		console.log('sending ping');
 		sendTimestamp = BigInt(Date.now());
-		await send(waku, 'ping', Ping.encode({timestamp: sendTimestamp}));
+		await send(waku, 'ping', Ping.encode({ timestamp: sendTimestamp }));
 
 		// unsubscribe after 5 seconds
 		setTimeout(() => {
@@ -261,13 +268,13 @@ async function retrieval(waku: LightNode): Promise<Unsubscribe> {
 	const unsubscribe = await subscribe(waku, 'retrieval-delivery', (response) => {
 		const decoded = Response.decode(response.payload);
 
-		const { address } = get_chunk_info(decoded.data)
+		const { address } = get_chunk_info(decoded.data);
 
 		// Check if there is a callback for this chunk
 		const addr = '0x' + address;
 		const callback = chunkCallbacks.get(addr);
 		if (callback === undefined) {
-			console.log('no callback for chunk', addr)
+			console.log('no callback for chunk', addr);
 			return;
 		}
 
@@ -289,14 +296,14 @@ export async function getChunk(waku: LightNode, address: string): Promise<Uint8A
 			chunkCallbacks.set(address, callback);
 
 			// Send the request
-			send(waku, 'retrieval-request', Request.encode({address: getBytes(address)}));
+			send(waku, 'retrieval-request', Request.encode({ address: getBytes(address) }));
 		}),
 		new Promise<undefined>((resolve) => {
 			setTimeout(() => {
 				resolve(undefined);
 			}, 5000);
 		})
-	])
+	]);
 
 	// ensure that the callback is removed
 	chunkCallbacks.delete(hexlify(address));

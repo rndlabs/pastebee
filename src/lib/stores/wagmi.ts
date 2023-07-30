@@ -26,7 +26,7 @@ import {
 	polygonMumbai,
 	polygonZkEvm,
 	polygonZkEvmTestnet,
-    gnosis,
+	gnosis
 } from '@wagmi/core/chains';
 import { publicProvider } from '@wagmi/core/providers/public';
 import { alchemyProvider } from '@wagmi/core/providers/alchemy';
@@ -56,7 +56,7 @@ let unWatchNetwork: () => void;
 const defaultChains = [
 	mainnet,
 	goerli,
-    gnosis,
+	gnosis,
 	arbitrum,
 	arbitrumGoerli,
 	avalanche,
@@ -120,7 +120,7 @@ export const configureWagmi = async (options: IOptions = {}) => {
 
 	wagmiLoaded.set(true);
 	await init();
-    // client.set(wagmiClient);
+	// client.set(wagmiClient);
 };
 
 export const init = async () => {
