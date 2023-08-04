@@ -24,7 +24,7 @@
 
 	import { parseEther } from 'ethers';
 	import ImageViewer from '$lib/components/ImageViewer.svelte';
-	import init, { ChunkInfo, get_chunk, get_chunk_info } from 'swarm-wasm-lib';
+	import init, { ChunkInfo, get_chunk, get_chunk_info } from '@rndlabs/swarm-wasm-lib';
 
 	let session: Session | undefined;
 	let paste: Paste;

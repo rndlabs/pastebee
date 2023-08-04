@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@rndlabs/swarm-wasm-lib':
-    specifier: ^0.1.0
-    version: 0.1.0
+    specifier: ^0.1.2
+    version: 0.1.2
   '@web3modal/ethereum':
     specifier: ^2.6.2
     version: 2.6.2(@wagmi/core@1.3.7)(viem@1.2.12)
@@ -1923,8 +1923,8 @@ packages:
   /@protobufjs/utf8@1.1.0:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
-  /@rndlabs/swarm-wasm-lib@0.1.0:
-    resolution: {integrity: sha512-fwUW2hfW/GShiwSaRQ2OtQ0uAOAoM00+p4avgZAxKRHzLvBCZQDq21buDINwx0Ii8tikwJorkmsp5vy3cvTmNA==}
+  /@rndlabs/swarm-wasm-lib@0.1.2:
+    resolution: {integrity: sha512-T4PyT5MqDgIbZxRw+JFOoJaRwS61SYdherh33Ws2F7I46gHZhcwO5ZDfptn3GAoDV2jCnYFALaODBQNj0dJxjg==}
     dev: false
 
   /@safe-global/safe-apps-provider@0.17.1(typescript@5.0.4)(zod@3.21.4):
